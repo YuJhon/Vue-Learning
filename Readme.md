@@ -117,3 +117,11 @@
 
 - 展示结果
 ![vue指令学习demo](./photos/vue指令学习demo-01.png)
+
+
+- Vue-DevTools源码安装
+   + 1、https://nodejs.org/en/ 下载node.exe安装
+   + 2、去https://github.com/vuejs/vue-devtools 下载到文件
+   + 3、进入vue-devtools-master工程 先执行npm install再执行npm run build
+   + 4、进入vue-devtools-master\shells\chrome文件夹中修改mainifest.json 中的persistant为true
+   + 5、打开谷歌浏览器设置--->扩展程序-->勾选开发者模式--->加载已解压的扩展程序--->选择“vue-devtools-master\shells下的chrome”文件夹，至此恭喜已经安装成功！
