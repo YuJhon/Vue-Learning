@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Vue系统指令 v-if and v-show</title>
+    <script src="../dist/js/v1/vue.js"></script>
+</head>
+
+<body>
+    <div id="app">
+        <button @click="toggle">切换显示</button>
+        <div v-if="isShow">v-if DIV</div>
+        <div v-show="isShow">v-show DIV</div>
+    </div>
+    <script>
+        var vm = new Vue({
+            el: '#app',
+            data: {
+                isShow: true
+            },
+            methods: {
+                toggle: function() {
+                    this.isShow = !this.isShow;
+                }
+            }
+        });
+    </script>
+</body>
+
+</html>

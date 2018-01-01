@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Vue系统指令 v-on</title>
+    <script src="../dist/js/v1/vue.js"></script>
+</head>
+
+<body>
+    <div id="app">
+        <button v-on:click="submit01">提交测试1</button>
+        <button @click="submit01">提交测试2</button>
+        <input type="text" @keydown="kd">
+        <form @submit.prevent action="http://www.jhonrain.org">
+            <input type="submit" @click="submit01" value="表单提交" />
+        </form>
+    </div>
+    <script>
+        var vm = new Vue({
+            el: '#app',
+            data: {},
+            methods: {
+                submit01: function() {
+                    console.info('submit');
+                },
+                kd: function() {
+                    console.info('kd');
+                }
+            }
+        });
+    </script>
+</body>
+
+</html

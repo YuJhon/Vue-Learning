@@ -1,12 +1,25 @@
-.list {
-    width: 60%;
+.opearea {
+    width: 800px;
+    margin-left: 400px;
 }
 
-.list th,
-td {
-    border: 1px solid rgb(83, 81, 81);
+.list {
+    width: 800px;
+    border-collapse: collapse;
+    margin: 20px auto;
 }
 
 .list tr>th {
-    background-color: rgb(87, 136, 240);
+    background-color: #0094ff;
+    color: #fff;
+    font-size: 16px;
+    padding: 5px;
+    text-align: center;
+    border: 1px solid #000000;
+}
+
+.list tr>td {
+    padding: 5px;
+    text-align: center;
+    border: 1px solid #000000;
 }

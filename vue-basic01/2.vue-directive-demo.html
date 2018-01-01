@@ -12,11 +12,13 @@
 
 <body>
     <div id="app">
-        <input type="text" v-model="productId" />
-        <input type="text" v-model="productName" @keydown.enter="addProduct" />
-        <button @click="addProduct">添加品牌</button>
-        <div>
-            <input type="text" placeholder="请输入搜索内容" v-model="searchVal" />
+        <div class="opearea">
+            <input type="text" v-model="productId" />
+            <input type="text" v-model="productName" @keydown.enter="addProduct" />
+            <button @click="addProduct">添加品牌</button>
+            <div>
+                <input type="text" placeholder="请输入搜索内容" v-model="searchVal" />
+            </div>
         </div>
         <table class="list">
             <tr>
@@ -24,6 +26,9 @@
                 <th>品牌名称</th>
                 <th>创建时间</th>
                 <th>操作</th>
+            </tr>
+            <tr v-if="list.length == 0">
+                <td colspan="4">当前列表无数据</td>
             </tr>
             <tr v-for="item in list | filterBy searchVal in 'name'" track-by="$index">
                 <td>{{item.id}}</td>
