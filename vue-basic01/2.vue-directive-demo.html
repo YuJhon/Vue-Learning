@@ -33,7 +33,7 @@
             <tr v-for="item in list | filterBy searchVal in 'name'" track-by="$index">
                 <td>{{item.id}}</td>
                 <td>{{item.name}}</td>
-                <td>{{item.ctime | datefmt '-'}}</td>
+                <td>{{item.ctime | globalDatafmt '-'}}</td>
                 <td>
                     <a href="javascript:void(0);" @click="del(item.id);">删除</a>
                 </td>
@@ -41,6 +41,16 @@
         </table>
     </div>
     <script>
+        /* 定义全局的过滤器 */
+        Vue.filter('globalDatafmt', function(input, spliceChar) {
+            var date = new Date(input);
+            var year = date.getFullYear();
+            var m = date.getMonth() + 1;
+            var d = date.getDate();
+            var fmtStr = year + spliceChar + m + spliceChar + d;
+            return fmtStr;
+        });
+
         var vm = new Vue({
             el: "#app",
             data: {
@@ -83,7 +93,7 @@
                 }
             },
             filters: {
-                /** 自定义全局指令 :定义在 VM中的filters对象中的所有过滤器都是私有过滤器 **/
+                /** 定义在 VM中的filters对象中的所有过滤器都是私有过滤器 **/
                 datefmt: function(input, spliceChar) {
                     var date = new Date(input);
                     var year = date.getFullYear();
