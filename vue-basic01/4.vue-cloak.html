@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Vue Cloak Directive</title>
+    <style>
+        [v-cloak] {
+            display: none;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="app">
+        <span v-cloak>{{msg}}</span>
+    </div>
+    <script src="../dist/js/v1/vue.js"></script>
+    <script>
+        new Vue({
+            el: "#app",
+            data: {
+                msg: "Hello Vue!"
+            }
+        });
+    </script>
+</body>
+
+</html>

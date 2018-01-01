@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Vue双向数据绑定 & v-model</title>
+    <script src="../dist/js/v1/vue.js"></script>
+</head>
+
+<body>
+    <div id="app">
+        <input type="text" :value="name">
+        <input type="text" v-model="age">
+        <hr>
+        <form action="#">
+            <input type="text" id="username" v-model="user.uname">
+            <input type="password" id="pwd" v-model="user.pwd">
+            <input type="submit" v-on:click="submit" value="提交">
+        </form>
+    </div>
+    <script>
+        var vm = new Vue({
+            el: "#app",
+            data: {
+                name: 'Jhon',
+                age: 22,
+                user: {
+                    uname: '',
+                    pwd: ''
+                }
+            },
+            methods: {
+                submit: function() {
+                    console.info('username=' + this.user.uname + ',password=' + this.user.pwd);
+                }
+            }
+        });
+    </script>
+</body>
+
+</html>
