@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Vue Resource 初探</title>
+    <script src="../dist/js/v1/vue.js"></script>
+    <script src="../dist/js/vue-resource1.3.5.js"></script>
+</head>
+
+<body>
+    <div id="app">
+        {{dataStr | json}}
+        <button @click="getData">Get请求</button>
+        <button @click="postDemo">POST请求</button> {{postData | json}}
+    </div>
+</body>
+<script>
+    new Vue({
+        el: '#app',
+        data: {
+            dataStr: null,
+            postData: null
+        },
+        methods: {
+            getData: function() {
+                var url = 'http://localhost:8090/getProductList';
+                this.$http.get(url).then(response => {
+                    console.info(response.body);
+                    this.dataStr = response.body;
+                }, response => {
+                    console.debug('处错误了');
+                });
+            },
+            postDemo: function() {
+                var url = 'http://localhost:8090/postData';
+                this.$http.post(url, {
+                    name: '奥迪1',
+                    id: 3
+                }, {
+                    emulateJSON: false
+                }).then(response => {
+                    this.postData = response.body;
+                }, response => {
+
+                });
+            }
+        }
+    });
+</script>
+
+</html>
