@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Vue-Resource-Demo</title>
+    <link rel="stylesheet" type="text/css" media="screen" href="../dist/css/main.css" />
+    <script src="../dist/js/v1/vue.js"></script>
+    <script src="../dist/js/vue-resource1.3.5.js"></script>
+</head>
+
+<body>
+    <div id="app">
+        <div class="opearea">
+            <input type="text" v-model="productId" />
+            <input type="text" v-model="productName" @keydown.enter="addProduct" />
+            <button @click="addProduct">添加品牌</button>
+            <div>
+                <input type="text" placeholder="请输入搜索内容" v-model="searchVal" />
+            </div>
+        </div>
+        <table class="list">
+            <tr>
+                <th>编号</th>
+                <th>品牌名称</th>
+                <th>创建时间</th>
+                <th>操作</th>
+            </tr>
+            <tr v-if="list.length == 0">
+                <td colspan="4">当前列表无数据</td>
+            </tr>
+            <tr v-for="item in list | filterBy searchVal in 'name'" track-by="$index">
+                <td>{{item.id}}</td>
+                <td>{{item.name}}</td>
+                <td>{{item.ctime }}</td>
+                <td>
+                    <a href="javascript:void(0);" @click="del(item.id);">删除</a>
+                </td>
+            </tr>
+        </table>
+    </div>
+</body>
+<script>
+    // Vue 的生命周期
+    new Vue({
+        el: "#app",
+        data: {
+            list: [],
+            searchVal: '',
+            productId: '',
+            productName: ''
+        },
+        created: function() {
+            this.getProductList();
+        },
+        methods: {
+            addProduct: function() {
+                /** 参数的校验 **/
+                this.$http.post('http://localhost:8090/saveData', {
+                    id: this.productId,
+                    name: this.productName,
+                    ctime: new Date()
+                }, {
+                    emulateJSON: false
+                }).then(resp => {
+                    console.info(resp.body);
+                    this.productId = '';
+                    this.productName = '';
+                    if (resp.body.code == 0) {
+                        this.getProductList();
+                    } else {
+                        alert(resp.body.msg);
+                    }
+                }, resp => {
+                    console.error('系统繁忙，请稍后再试！');
+                });
+            },
+            getProductList: function() {
+                this.$http.get('http://localhost:8090/getProductList')
+                    .then(resp => {
+                        if (resp) {
+                            this.list = resp.body.data;
+                            console.info(this.list);
+                        }
+                    }, resp => {
+                        console.info('系统繁忙，请稍后再试！')
+                    });
+            },
+            del: function(id) {
+                console.info('删除id=' + id);
+            }
+        }
+    });
+</script>
+
+</html>
