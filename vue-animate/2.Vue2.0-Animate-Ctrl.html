@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Vue 1.0中使用原生的Css控制显示隐藏动画</title>
+    <style>
+        .show-enter-active,
+        .show-leave-active {
+            transition: all .4s ease;
+            padding-left: 0;
+        }
+        
+        .show-enter,
+        .show-leave-active {
+            padding-left: 100px;
+        }
+    </style>
+    <script src="../dist/js/v2/vue.js"></script>
+</head>
+
+<body>
+    <div id="app">
+        <button @click="toggle">隐藏/显示控制</button><br/>
+        <transition name="show">
+            <div v-show="isshow">{{msg}}</div>
+        </transition>
+    </div>
+</body>
+<script>
+    new Vue({
+        el: "#app",
+        data: {
+            isshow: false,
+            msg: 'Vue 2.0 Animation!'
+        },
+        methods: {
+            toggle: function() {
+                this.isshow = !this.isshow;
+            }
+        }
+    });
+</script>
+
+</html>

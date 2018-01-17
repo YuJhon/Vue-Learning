@@ -1,0 +1,1220 @@
+<apex:page controller="SVC_CustomerCompensationDetailController" tabstyle="SVC_CustomerCompensation__tab" showheader="true" sidebar="false" id="thePage">
+    <c:SVCLoadingStatus />
+    <html>
+
+    <head>
+        <meta charset="utf-8" />
+        <title>客户补偿详情</title>
+        <link rel="stylesheet" type="text/css" href="{!URLFOR($Resource.bootstrappack, 'css/bootstrap.min.css')}" />
+        <link rel="stylesheet" type="text/css" href="{!URLFOR($Resource.bootstrappack, 'css/page.css')}" />
+        <link rel="stylesheet" type="text/css" href="{!URLFOR($Resource.bootstrappack, 'css/popup.css')}" />
+        <link rel="stylesheet" type="text/css" href="{!URLFOR($Resource.PageSource,'/PageSource/css/public-css.css')}" />
+        <link rel="stylesheet" type="text/css" href="{!URLFOR($Resource.settlement,'settle/css/settle.css')}" />
+
+        <script type="text/javascript" src="{!URLFOR($Resource.PageSource,'/PageSource/js/jquery-1.11.3.min.js')}"></script>
+        <script type="text/javascript" src="{!URLFOR($Resource.settlement,'layer/layer/layer.js')}" charset="UTF-8"></script>
+        <script type="text/javascript" src="{!URLFOR($Resource.settlement,'settle/js/base.settle.js')}" charset="UTF-8"></script>
+        <script type="text/javascript" src="{!URLFOR($Resource.settlement,'settle/js/dialog.js')}" charset="UTF-8"></script>
+
+        <style type="text/css">
+            .w10 {
+                width: 10px;
+            }
+            
+            .w20 {
+                width: 20px;
+            }
+            
+            .w50 {
+                width: 50px;
+            }
+            
+            .w80 {
+                width: 80px;
+            }
+            
+            .w100 {
+                width: 100px;
+            }
+            
+            .w110 {
+                width: 110px;
+            }
+            
+            .w145 {
+                width: 145px;
+            }
+            
+            .w285 {
+                width: 285px;
+            }
+            
+            .w300 {
+                width: 300px;
+            }
+            
+            .form-select-height {
+                height: 30px;
+            }
+            
+            #editCstCompDiv input:focus {
+                border-style: solid;
+                border-color: #03a9f4;
+                box-shadow: 0 0 15px #03a9f4;
+            }
+            
+            input[disabled]:hover {
+                cursor: not-allowed;
+            }
+            
+            .required_red {
+                color: red;
+            }
+            
+            .selectRow {
+                background: #a2a5a7 !important;
+            }
+            
+            .unselectRow {
+                background: #fff;
+            }
+            
+            .firstdiv {
+                float: left;
+                margin-top: 10px;
+                padding-left: 32px;
+                width: 95%;
+            }
+            
+            .div {
+                float: left;
+                height: 32px;
+                line-height: 32px;
+                width: 400px;
+            }
+            
+            .spandiv {
+                float: left;
+                height: 32px;
+                line-height: 32px;
+                width: 100px;
+            }
+            
+            .search {
+                position: absolute;
+                width: 30px;
+                height: 31px;
+                top: 1px;
+                right: 1px;
+                z-index: 99;
+            }
+            
+            .search-icon-img {
+                height: 32px;
+                width: 32px;
+                margin-top: 0px
+            }
+            
+            .zhezhao {
+                width: 100%;
+                height: 100%;
+                background-color: #000;
+                filter: alpha(opacity=50);
+                -moz-opacity: 0.5;
+                opacity: 0.5;
+                position: absolute;
+                left: 0px;
+                top: 0px;
+                display: none;
+                z-index: 1000;
+            }
+            
+            .PopupBox {
+                width: 1100px;
+                height: auto;
+                min-height: 50%;
+                position: absolute;
+                top: 100px;
+                left: 23%;
+                background-color: #fff;
+                margin-left: -140px;
+                display: none;
+                z-index: 1500;
+            }
+            
+            #builder {
+                width: 360px;
+            }
+            
+            #project_grid {
+                max-height: 360px;
+                top: 32px;
+            }
+            
+            .required_red {
+                color: red;
+            }
+            
+            .align-cOut {
+                height: auto !important;
+            }
+            
+            .align-cOut div:nth-of-type(2) {
+                width: 280px;
+            }
+            
+            .w100-persent-fl {
+                width: 100%;
+                float: left;
+                margin-top: 10px;
+            }
+            
+            .selection-item {
+                height: 30px;
+                background-color: #eee;
+                text-align: inline;
+                margin: 0 10px 0 10px;
+            }
+            
+            .ml-10-px {
+                margin-left: 10px;
+            }
+            
+            .pt-6-px {
+                padding-top: 6px;
+            }
+            
+            h3 {
+                font-size: 1.2em;
+            }
+            
+            .des-info-title {
+                font-weight: 700;
+                font-size: 14px;
+            }
+            
+            .reverse-90 {
+                transform: rotate(-90deg);
+            }
+            
+            .tables td {
+                border: 1px solid #eee;
+                text-align: center;
+            }
+            
+            .tables th {
+                text-align: center;
+            }
+            
+            .table td {
+                border: 1px solid #eee;
+            }
+            
+            .settle-edit-pop-box {
+                width: 1100px;
+                height: 460px;
+                position: absolute;
+                top: 20px;
+                margin-left: -200px;
+                background-color: #fff;
+                display: none;
+                z-index: 1500;
+                border-radius: 3px;
+            }
+        </style>
+
+        <script>
+            function checkPay(_this) {
+                var checkValue = $(_this).val();
+                /** 额外扣除管理费 **/
+                var parent = $(_this).parent().parent().next().next();
+                var extralPaymentSpan = $(parent.find('span')[1]);
+                /** 索赔总额 **/
+                var totalPayElem = parent.next().next();
+                var totalPaymentSpan = $(totalPayElem.find('span')[1]);
+                //(^[0-9]{1,9}$)|(^[0-9]{0,9}[\.]{1}[0-9]{1,2}$)
+                //最大整数部分9位，如果有小数则控制2位
+                if (!/^(([0-9]{1,3}([,]{1}[0-9]{3})?([,]{1}?[0-9]{3})?|[0-9]{1,9})(\.{1}[0-9]{1,2})?)$/
+                    .test(checkValue)) {
+                    $(_this).css('border-color', 'red');
+                    $(_this).css('box-shadow', '0 0 15px red');
+                    $("#checkInputStatu").val("0");
+                    totalPaymentSpan.html('0.00');
+                    extralPaymentSpan.html('0.00');
+                } else {
+                    $(_this).css('border', '1px solid #e7e7eb');
+                    $(_this).css('box-shadow', '');
+                    $("#checkInputStatu").val("1");
+                    checkValue = checkValue.replace(/,/g, '');
+                    var rate = $(_this).parent().parent().next().find('select').val();
+                    var extraPay = rate * checkValue;
+                    var total = (1 + parseFloat(rate)) * checkValue;
+
+                    extralPaymentSpan.html(extraPay.toFixed(2));
+                    totalPaymentSpan.html(total.toFixed(2));
+                }
+
+                reCountVal();
+            }
+
+
+            /** 重新计算汇总的金额 **/
+            function reCountVal() {
+                var item01Val = 0;
+                var item02Val = 0;
+                var item03Val = 0;
+
+                $("#zbjdiv").find("input").each(function() {
+                    var tempIdStr = $(this).attr("id");
+                    var tempVal = $(this).val();
+                    if (tempVal == "" || (parseFloat(tempVal) + '' === 'NaN') || !/^(([0-9]{1,3}([,]{1}[0-9]{3})?([,]{1}?[0-9]{3})?|[0-9]{1,9})(\.{1}[0-9]{1,2})?)$/
+                        .test(tempVal)) {
+                        tempVal = '0.00';
+                    }
+                    tempVal = tempVal.replace(/,/g, '');
+                    if (tempIdStr != undefined && tempIdStr.indexOf('builderPayCharge') > -1) {
+                        item01Val += parseFloat(tempVal);
+                    }
+                });
+
+                $("#zbjdiv").find("span[class='extralPay-item']").each(function() {
+                    var tempVal = $(this).html();
+                    if (tempVal == "" || (parseFloat(tempVal) + '' === 'NaN')) {
+                        tempVal = '0.00';
+                    }
+                    tempVal = tempVal.replace(/,/g, '');
+                    item02Val += parseFloat(tempVal);
+                });
+
+                $("#zbjdiv").find("span[class='summaryPay-item']").each(function() {
+                    var tempVal = $(this).html();
+                    if (tempVal == "" || (parseFloat(tempVal) + '' === 'NaN')) {
+                        tempVal = '0.00';
+                    }
+                    tempVal = tempVal.replace(/,/g, '');
+                    item03Val += parseFloat(tempVal);
+                });
+
+                $("#totalPayText").html(item03Val.toFixed(2));
+                $("#totalBuilderPayText").html(item01Val.toFixed(2));
+                $("#totalExtraPayText").html(item02Val.toFixed(2));
+            }
+
+            function checkNumber(_this) {
+                var checkValue = $(_this).val();
+                if (!/^(([0-9]{1,3}([,]{1}[0-9]{3})?([,]{1}?[0-9]{3})?|[0-9]{1,9})(\.{1}[0-9]{1,2})?)$/.test(checkValue)) {
+                    $(_this).css('border-color', 'red');
+                    $(_this).css('box-shadow', '0 0 15px red');
+                    $("#checkInputStatu").val("0");
+                    return false;
+                } else {
+                    $(_this).css('border', '1px solid #e7e7eb');
+                    $(_this).css('box-shadow', '');
+                    $("#checkInputStatu").val("1");
+                    var parent = $(_this).parent();
+                    var next = parent.next();
+                    var rate = next.children().val();
+                    $(_this).parent().next().next().text(rate * checkValue);
+                    return true;
+                }
+            }
+
+            function checkRequiredText(_this) {
+                var checkValue = $(_this).val();
+                if (!/\S+/.test(checkValue)) {
+                    $(_this).css('border-color', 'red');
+                    $(_this).css('box-shadow', '0 0 15px red');
+                    $("#checkInputStatu").val("0");
+                    return false;
+                } else {
+                    $(_this).css('border', '1px solid #e7e7eb');
+                    $(_this).css('box-shadow', '');
+                    $("#checkInputStatu").val("1");
+                    return true;
+                }
+            }
+        </script>
+    </head>
+
+    <body>
+        <div style="width: 100%; height: 800px;">
+            <apex:form id="theForm">
+                <apex:outputpanel id="outResult">
+                    <input type="hidden" id="checkInputStatu" value="1" />
+                    <apex:inputhidden value="{!id}" id="id" />
+                    <apex:inputhidden value="{!index}" id="index" />
+                    <apex:inputhidden value="{!contractType}" id="contractType" />
+                    <apex:inputhidden value="{!CstComp.Is_Has_Contract__c}" id="isHasContract" />
+                    <apex:inputhidden value="{!ProgrammeConttId}" id="ProgrammeConttId" />
+                    <apex:actionfunction name="save" action="{!save}" oncomplete="successDialog()" />
+                    <apex:actionfunction name="add" action="{!add}" rerender="outResultContract" status="status" />
+                    <apex:actionfunction name="del" action="{!del}" rerender="outResultContract,outResultTotal" status="status" oncomplete="reCountVal();" />
+                    <apex:actionfunction name="selectedContract" action="{!selectedContract}" rerender="outResultContract" oncomplete="closeWindow()" />
+                    <apex:actionfunction name="closeContractWindow" action="{!closeContractWindow}" rerender="contractList" />
+                    <apex:actionfunction name="getProgrammeContract" action="{!getProgrammeContract}" rerender="contractList" oncomplete="getProgrammeContractFun()" />
+                    <apex:actionfunction name="queryById" action="{!queryById}" rerender="outResult" oncomplete="oncompleteFun()" />
+
+                    <table style="width: 100%; margin-top: 20px;" id="editCstCompDiv">
+                        <tr>
+                            <td>
+                                <div class="w100-persent-fl">
+                                    <div class="ml-10-px selection-item">
+                                        <div class="pt-6-px">
+                                            <span class="glyphicon glyphicon-triangle-bottom" target="taskTr" onclick="selectionControl(this);"></span>
+                                            <h3>基本信息</h3>
+                                        </div>
+                                    </div>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr class="taskTr">
+                            <td>
+                                <div class="firstdiv">
+                                    <div style="display: flex; font-size: 15px;">
+                                        <div class="spandiv" style="width: 300px;">
+                                            <span class="des-info-title">任务编号：</span> <a href="/{!CstComp.TaskId__c}" style="cursor: pointer; color: #459ae9 !important;" target="_blank"><span style="font-size: 14px;">{!CstComp.TaskId__r.Name}</span></a>
+
+                                        </div>
+                                        <div class="spandiv" style="width: 400px;">
+                                            <span class="des-info-title">问题：</span> <span style="font-size: 14px;">{!CstComp.TaskId__r.Position_Problem__c}</span>
+                                        </div>
+                                        <div class="spandiv" style="width: 400px;">
+                                            <span class="des-info-title">房产：</span> <span style="font-size: 14px;">{!IF(CstComp.TaskId__r.Room__r.Name=='',CstComp.TaskId__r.Projectc__r.Name,CstComp.TaskId__r.Room__r.Name)}</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <div class="w100-persent-fl">
+                                    <div class="ml-10-px selection-item">
+                                        <div class="pt-6-px">
+                                            <span class="glyphicon glyphicon-triangle-bottom" target="selection" onclick="selectionControl(this);"></span>
+                                            <h3>补偿信息</h3>
+                                        </div>
+                                    </div>
+                                </div>
+                            </td>
+                        </tr>
+                        <!-- <tr class="selection">
+						<td>
+							<div class="firstdiv">
+								<div class="spandiv">
+									<span class="des-info-title">支付合同：</span>
+								</div>
+								<div class="div">
+									<div>
+										<input type="radio" id="isContract"
+											onclick="openSelectContract()" value="1" /> 有合同 （含简易合同）<input
+											type="radio" checked="checked" id="noContract" value="0"
+											onclick="closeSelectContract()" style="margin-left: 80px;" />
+										无合同
+									</div>
+								</div>
+							</div>
+						</td>
+					</tr> -->
+                        <tr id="beneficiary" class="selection">
+                            <td>
+                                <div class="firstdiv">
+                                    <div class="spandiv">
+                                        <span class="des-info-title">收款人姓名<span
+                    class="required_red">*</span>：
+                                        </span>
+                                    </div>
+                                    <div class="div">
+                                        <apex:inputField id="beneficiaryPerson" styleClass="search-input form-control required" onblur="checkRequiredText(this);" value="{!CstComp.Beneficiary_Person__c}" />
+                                    </div>
+                                </div>
+                            </td>
+                        </tr>
+                        <!-- 
+					<tr style="display: none" id="SelectContract" class="selection">
+						<td>
+							<div class="firstdiv">
+								<div class="spandiv">
+									<span class="des-info-title">合同名称<span
+										class="required_red">*</span>：
+									</span>
+								</div>
+								<div class="div" style="position: relative;">
+
+									<input type="text" readonly="readonly" class="search-input form-control"
+										placeholder="请选择维修单位" id="taskId"
+										value="{!CstComp.Maintenance_Contract__r.Contract_No__c}{!CstComp.Maintenance_Contract__r.ContractName__c}"
+										title="{!CstComp.Maintenance_Contract__r.Contract_No__c}  {!CstComp.Maintenance_Contract__r.ContractName__c}" />
+									<div class="search">
+										<apex:inputhidden value="{!CstComp.Maintenance_Contract__c}"
+											id="MaintenanceContractId" />
+										<a onclick="openContractWind(0)" href="javascript:void(0)"
+											style="cursor: pointer; color: #459ae9 !important;"><img
+											class="search-icon-img" style="margin-top: 0px;"
+											src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABIAAAATCAIAAAAS8MqlAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAAyJpVFh0WE1MOmNvbS5hZG9iZS54bXAAAAAAADw/eHBhY2tldCBiZWdpbj0i77u/IiBpZD0iVzVNME1wQ2VoaUh6cmVTek5UY3prYzlkIj8+IDx4OnhtcG1ldGEgeG1sbnM6eD0iYWRvYmU6bnM6bWV0YS8iIHg6eG1wdGs9IkFkb2JlIFhNUCBDb3JlIDUuMy1jMDExIDY2LjE0NTY2MSwgMjAxMi8wMi8wNi0xNDo1NjoyNyAgICAgICAgIj4gPHJkZjpSREYgeG1sbnM6cmRmPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5LzAyLzIyLXJkZi1zeW50YXgtbnMjIj4gPHJkZjpEZXNjcmlwdGlvbiByZGY6YWJvdXQ9IiIgeG1sbnM6eG1wPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvIiB4bWxuczp4bXBNTT0iaHR0cDovL25zLmFkb2JlLmNvbS94YXAvMS4wL21tLyIgeG1sbnM6c3RSZWY9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9zVHlwZS9SZXNvdXJjZVJlZiMiIHhtcDpDcmVhdG9yVG9vbD0iQWRvYmUgUGhvdG9zaG9wIENTNiAoV2luZG93cykiIHhtcE1NOkluc3RhbmNlSUQ9InhtcC5paWQ6N0Y5QzdDQzlDRTAzMTFFNDgwRDlDNjZBQjgwN0Y2NjEiIHhtcE1NOkRvY3VtZW50SUQ9InhtcC5kaWQ6N0Y5QzdDQ0FDRTAzMTFFNDgwRDlDNjZBQjgwN0Y2NjEiPiA8eG1wTU06RGVyaXZlZEZyb20gc3RSZWY6aW5zdGFuY2VJRD0ieG1wLmlpZDo3RjlDN0NDN0NFMDMxMUU0ODBEOUM2NkFCODA3RjY2MSIgc3RSZWY6ZG9jdW1lbnRJRD0ieG1wLmRpZDo3RjlDN0NDOENFMDMxMUU0ODBEOUM2NkFCODA3RjY2MSIvPiA8L3JkZjpEZXNjcmlwdGlvbj4gPC9yZGY6UkRGPiA8L3g6eG1wbWV0YT4gPD94cGFja2V0IGVuZD0iciI/Pjzi8L4AAAHsSURBVHjafFPLTsJAFO2DlBZChBSWaklXSPsBbGBh3JhGw8Lwi8Z9Y6JoAhsWBjEq6II3GwMIIZDQAO14cWA6NOhdTKdn7rlz7mNYhBDDMLCyLEtvsHl+iXH4Q3NIIOZv89HelmXVap/dbnc2mwEeDAbj8XgikRBFwUNjSdR6vVkoFlfLJcdxBIRwPM9nMhlVje+hNZvNfP4R9qqqJpNJWY4AOBwOq9WPVqsF+7OzU0VRSJ4bbdfXN4vFIpVK6XrSU4m3t2qpVBIEIZe7kiTJLcn7ew04kIamndCpYiEAKsoROEDaO5Vst9v4GN/gKtn+apoGATqdDqnwmjadTmGNxWJoa3RL8BGsk8mE4D63OGtDpJNYKt1rh+rk2ikUCoHTYDDYKTFF6Pf7ECQcDu/QIGPwqry8ou1VHoNicixSjg9/Vdgbmq7rfsEHw/H8/EJ748Sensq9Xs/v90M/f1XwgK9pAKXTaQbZ5XL5/v7h66u/Wjm2jWBzd5evVCqO44iSBDrdnMkcNRqNQqGwXNqekRdFMRAIDL+/o7JsGAaeT5Z+OPP5HI/yeDwG5OAgBDMA2uDING9h1iKRyMWFARPj3rb3pRHQshamaY5Go2g0ms1eciT1va+TgKDNMM5lWeZ51ivSc8M/D/xHgAEAZhY0pPsgAlsAAAAASUVORK5CYII=" />
+										</a>
+
+									</div>
+								</div>
+							</div>
+						</td>
+					</tr>
+					 -->
+                        <tr class="selection">
+                            <td>
+                                <div class="firstdiv">
+                                    <div class="spandiv">
+                                        <span class="des-info-title">补偿金额<span
+										class="required_red">*</span>：
+                                        </span>
+                                    </div>
+                                    <div class="div">
+                                        <apex:inputField styleClass="search-input form-control required" onkeypress="checkNumber(this);" onblur="checkNumber(this);" id="Payment" value="{!CstComp.Payment__c}" />
+                                    </div>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr class="selection">
+                            <td>
+                                <div class="firstdiv">
+                                    <div class="spandiv">
+                                        <span class="des-info-title">补偿户数<span
+										class="required_red">*</span>：
+                                        </span>
+                                    </div>
+                                    <div class="div">
+                                        <apex:inputField styleClass="search-input form-control required" onkeypress="checkNumber(this);" onblur="checkNumber(this);" value="{!CstComp.Pay_Num_Count__c}" id="PayNumCount" />
+                                    </div>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr class="selection">
+                            <td>
+                                <div class="firstdiv" style="height: 100px;">
+                                    <div class="spandiv">
+                                        <span class="des-info-title">补偿原因<span
+                    class="required_red">*</span>：
+                                        </span>
+                                    </div>
+                                    <div class="div" style="width: 60%;">
+                                        <apex:inputTextarea styleClass="form-control required" onblur="checkRequiredText(this);" id="trvVD" style="height: 100px;" value="{!CstComp.Pay_Reason__c}" />
+                                    </div>
+                                </div>
+                            </td>
+                        </tr>
+                    </table>
+                    <!-- 索赔录入（只有是已报价的才可以显示：并且上面的不能编辑） -->
+                    <div id="customerCompensation">
+                        <div class="w100-persent-fl">
+                            <hr/>
+                            <div class="ml-10-px selection-item">
+                                <div class="pt-6-px">
+                                    <span class="glyphicon glyphicon-triangle-bottom" target="selection1" onclick="selectionControl(this);"></span>
+                                    <h3>索赔管理</h3>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- 支付方  -->
+                        <div class="selection1">
+                            <div class="item-top">
+                                <div class="item-title fw-700" style="width:100px;">
+                                    <span>支&nbsp;付&nbsp;方&nbsp;(元)</span><span class="required_red">*</span>
+                                </div>
+                                <div class="item-input" id="payTopDiv" style="width:1050px;">
+                                    <div class="div-width95">
+                                        <div class="div-span" style="width:65px;">
+                                            <span>万科支付</span>
+                                        </div>
+                                        <div class="div-input1" style="width:440px;">
+                                            <apex:inputField styleClass="search-input form-control required Amount" value="{!CstComp.Vanke_Charge__c}" onkeypress="checkNumber(this);" onblur="checkNumber(this);" style="width: 315px; display: inline;" />
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- 责任单位 -->
+                            <div class="item-top">
+                                <div class="item-title fw-700" style="width:100px;">
+                                    <span>责任单位：</span><span class="required_red">*</span>
+                                </div>
+                                <div class="item-input" id="payTopDiv2" style="width:1050px;">
+                                    <div class="mt-10-px" style="width: 100%;">
+                                        <apex:outputpanel id="outResultTotal">
+                                            <label>索赔总额<B><font style="color:red"><span id="totalPayText">{!totalPayResult.totalPay}</span></font></B>元，合计质保金扣款<B><font style="color:red"><span id="totalBuilderPayText">{!totalPayResult.totalBuilderPay}</span></font></B>元，额外扣取管理费用 <B><font style="color:red"><span id="totalExtraPayText">{!totalPayResult.totalExtraPay}</span></font></B>元</label>
+                                        </apex:outputpanel>
+                                    </div>
+
+                                    <!--  -->
+                                    <div id="zbjdiv" class="mt-10-px" style="width: 100%;">
+                                        <apex:outputpanel id="outResultContract">
+                                            <apex:variable var="count" value="{!0}" />
+                                            <table class="table">
+                                                <thead>
+                                                    <tr>
+                                                        <th>序号</th>
+                                                        <th>责任单位合同<span class="required_red">*</span></th>
+                                                        <th>索赔可用额度(元)</th>
+                                                        <th>质保金索赔(元)</th>
+                                                        <th>额外扣除质保金比例</th>
+                                                        <th>额外扣除管理费用</th>
+                                                        <th>索赔原因<span class="required_red">*</span></th>
+                                                        <th>索赔总额(元)</th>
+                                                        <th style="width:5%">操作</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <apex:repeat value="{!BuilderPayments}" var="ccbp">
+                                                        <apex:variable var="rowClss" value="{!ccbp.ProgrammeContract__r}" />
+                                                        <tr>
+                                                            <td class="w10">{!count+1}</td>
+                                                            <td class="w285">
+                                                                <div class="item-input-div-sub1" style="width:282px;">
+                                                                    <div class="div-input40" style="width:250px">
+                                                                        <input readonly="readonly" name="builderPaySearchName" class="form-control required" placeholder="请选择责任单位" value="{!ccbp.ProgrammeContract__r.Contract_No__c}{!ccbp.ProgrammeContract__r.BuilderName__c}" title="{!ccbp.ProgrammeContract__r.Contract_No__c}  {!ccbp.ProgrammeContract__r.BuilderName__c}"
+                                                                        />
+                                                                    </div>
+
+                                                                    <div style="float:left;width:32px;" onclick="openContractWind(1,'{!count}','{!ccbp.ProgrammeContract__r.BuilderName__c}')">
+                                                                        <apex:inputhidden value="{!ccbp.ProgrammeContract__c}" />
+                                                                        <img class="search-icon-img" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABIAAAATCAIAAAAS8MqlAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAAyJpVFh0WE1MOmNvbS5hZG9iZS54bXAAAAAAADw/eHBhY2tldCBiZWdpbj0i77u/IiBpZD0iVzVNME1wQ2VoaUh6cmVTek5UY3prYzlkIj8+IDx4OnhtcG1ldGEgeG1sbnM6eD0iYWRvYmU6bnM6bWV0YS8iIHg6eG1wdGs9IkFkb2JlIFhNUCBDb3JlIDUuMy1jMDExIDY2LjE0NTY2MSwgMjAxMi8wMi8wNi0xNDo1NjoyNyAgICAgICAgIj4gPHJkZjpSREYgeG1sbnM6cmRmPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5LzAyLzIyLXJkZi1zeW50YXgtbnMjIj4gPHJkZjpEZXNjcmlwdGlvbiByZGY6YWJvdXQ9IiIgeG1sbnM6eG1wPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvIiB4bWxuczp4bXBNTT0iaHR0cDovL25zLmFkb2JlLmNvbS94YXAvMS4wL21tLyIgeG1sbnM6c3RSZWY9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9zVHlwZS9SZXNvdXJjZVJlZiMiIHhtcDpDcmVhdG9yVG9vbD0iQWRvYmUgUGhvdG9zaG9wIENTNiAoV2luZG93cykiIHhtcE1NOkluc3RhbmNlSUQ9InhtcC5paWQ6N0Y5QzdDQzlDRTAzMTFFNDgwRDlDNjZBQjgwN0Y2NjEiIHhtcE1NOkRvY3VtZW50SUQ9InhtcC5kaWQ6N0Y5QzdDQ0FDRTAzMTFFNDgwRDlDNjZBQjgwN0Y2NjEiPiA8eG1wTU06RGVyaXZlZEZyb20gc3RSZWY6aW5zdGFuY2VJRD0ieG1wLmlpZDo3RjlDN0NDN0NFMDMxMUU0ODBEOUM2NkFCODA3RjY2MSIgc3RSZWY6ZG9jdW1lbnRJRD0ieG1wLmRpZDo3RjlDN0NDOENFMDMxMUU0ODBEOUM2NkFCODA3RjY2MSIvPiA8L3JkZjpEZXNjcmlwdGlvbj4gPC9yZGY6UkRGPiA8L3g6eG1wbWV0YT4gPD94cGFja2V0IGVuZD0iciI/Pjzi8L4AAAHsSURBVHjafFPLTsJAFO2DlBZChBSWaklXSPsBbGBh3JhGw8Lwi8Z9Y6JoAhsWBjEq6II3GwMIIZDQAO14cWA6NOhdTKdn7rlz7mNYhBDDMLCyLEtvsHl+iXH4Q3NIIOZv89HelmXVap/dbnc2mwEeDAbj8XgikRBFwUNjSdR6vVkoFlfLJcdxBIRwPM9nMhlVje+hNZvNfP4R9qqqJpNJWY4AOBwOq9WPVqsF+7OzU0VRSJ4bbdfXN4vFIpVK6XrSU4m3t2qpVBIEIZe7kiTJLcn7ew04kIamndCpYiEAKsoROEDaO5Vst9v4GN/gKtn+apoGATqdDqnwmjadTmGNxWJoa3RL8BGsk8mE4D63OGtDpJNYKt1rh+rk2ikUCoHTYDDYKTFF6Pf7ECQcDu/QIGPwqry8ou1VHoNicixSjg9/Vdgbmq7rfsEHw/H8/EJ748Sensq9Xs/v90M/f1XwgK9pAKXTaQbZ5XL5/v7h66u/Wjm2jWBzd5evVCqO44iSBDrdnMkcNRqNQqGwXNqekRdFMRAIDL+/o7JsGAaeT5Z+OPP5HI/yeDwG5OAgBDMA2uDING9h1iKRyMWFARPj3rb3pRHQshamaY5Go2g0ms1eciT1va+TgKDNMM5lWeZ51ivSc8M/D/xHgAEAZhY0pPsgAlsAAAAASUVORK5CYII="
+                                                                        />
+                                                                    </div>
+                                                                </div>
+                                                            </td>
+                                                            <td class="w100"><span class="div-span"><span>0.00</span>元</span>
+                                                            </td>
+
+                                                            <td class="w100">
+                                                                <div class="div-input2" style="width:90px;">
+                                                                    <apex:inputField id="builderPayCharge" styleClass="search-input form-control required Amount" value="{!ccbp.Payment__c}" onkeyup="checkPay(this);" style="width:90px; display: inline;" />
+                                                                </div>
+                                                            </td>
+
+                                                            <td class="w100">
+                                                                <apex:selectList multiselect="false" id="payRateSel" styleclass="form-control form-select-height" size="1" onchange="changeExtraPay(this);" value="{!ccbp.Extral_Pay_Rate__c}" label="Extral_Pay_Rate__c:">
+                                                                    <apex:selectOptions value="{!percentage}"></apex:selectOptions>
+                                                                </apex:selectList>
+                                                            </td>
+                                                            <td class="w100"><span class="div-span">
+                                                 <span class="extralPay-item">{!ccbp.Extral_Pay_Money__c}</span>元</span>
+                                                                <apex:inputField style="display:none;" value="{!ccbp.Extral_Pay_Money__c}" />
+                                                            </td>
+                                                            <td class="w145">
+                                                                <apex:inputTextarea styleClass="form-control required" id="trvVD" value="{!ccbp.Remark__c}" />
+                                                            </td>
+                                                            <td class="w80"><span class="div-span">
+                                  <span class="summaryPay-item">{!ccbp.Total_Payment__c}</span>元</span>
+                                                                <apex:inputField style="display:none;" value="{!ccbp.Total_Payment__c}" />
+                                                            </td>
+                                                            <td class="w20">
+                                                                <a onclick="dell('{!count}',this)" href="javascript:void(0)">删除</a>
+                                                            </td>
+                                                        </tr>
+                                                        <apex:variable value="{!count+1}" var="count" />
+                                                    </apex:repeat>
+                                                </tbody>
+                                            </table>
+                                        </apex:outputpanel>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- 添加施工方的操作 -->
+                            <div class="item-top" id="constract">
+                                <div class="item-title" style="width:100px;">
+                                    <span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
+                                </div>
+                                <div class="item-input">
+                                    <span id="addBuilder" onclick="adds();"><font style="color:#0087ff;cursor:pointer;">+新增行</font></span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- 按钮区域 -->
+                    <div class="item-top" id="wholeInfo">
+                        <hr/>
+                        <div class="btn-area-new">
+                            <div class="form-btn" id="save" onclick="saves();">保存</div>
+                            <div class="form-btn" id="cancle" onclick="goBack();">取消</div>
+                        </div>
+                    </div>
+                    <div style="width: 98%; float: left; padding-top: 20px; margin-left: 20px;">
+                        <apex:pageBlock title="修改历史记录">
+                            <apex:pageblockTable value="{!objectHistory}" var="history">
+                                <apex:column headerValue="操作时间" value="{!history.theDate}" />
+                                <apex:column headerValue="操作类型" value="{!history.operating}" />
+                                <apex:column style="width:60%;word-break: break-all;" headerValue="内容" value="{!history.action}" />
+                                <apex:column headerValue="操作人">
+                                    <apex:outputLink value="/{!History.userId}"> {!History.who} </apex:outputLink>
+                                </apex:column>
+                            </apex:pageBlockTable>
+                        </apex:pageBlock>
+                    </div>
+                </apex:outputpanel>
+
+
+                <div class="zhezhao" id="zhezhao"></div>
+                <div id="PopupBox" class="PopupBox">
+                    <apex:outputpanel id="contractList">
+                        <apex:inputHidden value="{!curpage}" id="curpage" />
+                        <apex:inputhidden value="{!dataNum}" id="dataNum" />
+                        <apex:inputhidden value="{!objsize}" id="objsize" />
+                        <apex:inputhidden value="{!totalpage}" id="totalpage" />
+                        <div style="width: 100%; height: 30px;background-color:#1797c0;">
+                            <a style="float: right; margin: 5px 8px; width: 10px; cursor: pointer; color: #fff !important;" onclick="closeWindow()">X</a>
+                        </div>
+                        <div style="float: left; margin-bottom: 15px; padding-left: 10%;padding-top: 15px;">
+                            <div style="float: left; height: 32px; line-height: 32px;">
+                                <span>乙方</span>
+                            </div>
+                            <div class="search-bar" style="float: left; padding-left: 16px;">
+                                <div class="form-lookup">
+                                    <apex:inputhidden value="{!partyBName}" id="partyBName" />
+                                    <input type="text" class="search-input form-control" id="builder" autocomplete="off" value="" name="" onclick="builderClick()" onkeyup="builderKeyup()" /> <span class="x-icon x-icon-clear" id="project_clear" onclick="project_clearClick()">×</span>
+                                    <div class="grid" id="project_grid"></div>
+                                </div>
+                            </div>
+                        </div>
+                        <div style="float: left; margin-bottom: 15px; padding-left: 15px;padding-top: 15px;">
+                            <div style="float: left; height: 32px; line-height: 32px;">
+                                <span>合同编号</span>
+                            </div>
+                            <div style="float: left; padding-left: 16px;">
+                                <apex:inputText styleClass="search-input form-control" style="width:300px;" id="taskName" value="{!taskName}" />
+                            </div>
+                        </div>
+
+                        <div style="float: left; padding-left: 16px;padding-top: 15px;">
+                            <input type="button" class="form-btn" id="search_btn" onclick="getProgrammeContracts()" value="查找" />
+                        </div>
+
+                        <table class="table" style="width: 96%; margin-left: 2%;">
+                            <thead class="room_list_header">
+                                <tr>
+                                    <th style="width: 20%">合同编号</th>
+                                    <th style="width: 25%">合同名称</th>
+                                    <th style="width: 25%">乙方</th>
+                                    <th style="width: 10%">签订时间</th>
+                                    <th style="width: 20%; display: none;" class="WarrantyBalance">质保金余额</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <apex:variable var="ind" value="0" />
+                                <apex:repeat value="{!ProgrammeContracts}" var="pcc">
+                                    <apex:variable var="rowCls" value="{!IF(VALUE(ind)==0,'selectRow', 'unselectRow')}" />
+                                    <tr class="{!rowCls}" ondblclick="selectContract('{!pcc.id}','{!pcc.Contract_No__c}','{!pcc.BuilderName__c}')" onmouseover="this.style.backgroundColor ='#a2a5a7';" onmouseout="this.style.backgroundColor ='#fff';">
+                                        <td>{!pcc.Contract_No__c}</td>
+                                        <td>{!pcc.ContractName__c}</td>
+                                        <td>{!pcc.BuilderName__c}</td>
+                                        <td>
+                                            <apex:outputText value="{0,date,yyyy-MM-dd}">
+                                                <apex:param value="{!pcc.SignatureDate__c}" />
+                                            </apex:outputText>
+                                        </td>
+                                        <td style="display: none;" class="WarrantyBalance">{!pcc.WarrantyBalance__c}</td>
+                                    </tr>
+                                    <apex:variable var="ind" value="{!(VALUE(ind)+1)}" />
+                                </apex:repeat>
+                            </tbody>
+                            <tfoot>
+                                <tr>
+                                    <td colspan="10">
+                                        <div class="page-box">
+                                            <span id="total_num" class="page-total pull-left">共
+											{!objsize} 条</span> <span class="page-nav-area"> <a
+											id="last_btn" href="javascript:void(0);" onclick="lastPage()"
+											class="btn-pr page-prev"> <i class="arrow"></i>
+										</a> <span id="cur_page" class="page-num">{!curpage} /
+												{!totalpage}</span>
+                                            <a id="next_btn" href="javascript:void(0);" onclick="nextPage()" class="btn-pr page-next"> <i class="arrow"></i>
+                                            </a>
+                                            </span> <span class="goto-area"> <input id="pag_num"
+											type="text" class="inp" value='' /> <a id="select_page"
+											onclick="select_page()" href="javascript:void(0);"
+											class="btn-pr bg-white page-go">跳转</a>
+										</span>
+                                        </div>
+                                    </td>
+                                </tr>
+                            </tfoot>
+                        </table>
+                    </apex:outputpanel>
+                </div>
+            </apex:form>
+        </div>
+        <div id="running_bg" class="dialog-bg running"></div>
+    </body>
+
+    <script type="text/javascript">
+        document.getElementById('thePage').style.backgroundColor = '#fff';
+        (function($) {
+            $.getUrlParam = function(name) {
+                var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)");
+                var r = window.location.search.substr(1).match(reg);
+                if (r != null)
+                    return unescape(r[2]);
+                return null;
+            }
+        })(jQuery);
+
+        //获取参数
+        var id = $.getUrlParam('id');
+        document.getElementById('thePage:theForm:id').value = id;
+        $('#running_bg').show();
+        queryById();
+        //页面加载完成后初始化radio
+        function oncompleteFun() {
+            openContractInput();
+        }
+        //模糊搜索间隔
+        var pros = 0;
+        //最后搜索请求Id
+        var prorequestId = 10000000;
+        //上次搜索关键字
+        var oldprokw = '';
+
+        //---------点击项目输入框---------
+        function builderClick() {
+            oldprokw = document.getElementById('builder').value.trim();
+            //有数据显示
+            if (document.getElementById('project_grid').hasChildNodes()) {
+                $('#project_grid').show();
+            }
+        };
+        //------模糊搜索-------
+        function builderKeyup() {
+            //重置查询间隔，防止输入过快查询过多
+            clearTimeout(pros);
+            pros = setTimeout(getPro, 200);
+        };
+
+        function getPro() {
+            var builder = document.getElementById('builder').value.trim();
+            //查询条件一致，返回
+            if (builder == '' || oldprokw == builder) {
+                return;
+            } else {
+                //重置关键字
+                oldprokw = builder;
+                //重置已选项目
+                document.getElementById('thePage:theForm:partyBName').value = '';
+            }
+            prorequestId = prorequestId + 1;
+            //查询
+            SVC_CustomerCompensationDetailController.getParamData(prorequestId, builder, function(result, event) {
+                if (event.status) {
+                    if (result == null) {
+                        alert('查找错误');
+                        return;
+                    } else if (result != '') {
+                        //查询成功，拼接页面
+                        showProjectOptions(result);
+                    }
+                } else {
+                    alert('未知错误');
+                    return;
+                }
+            });
+        }
+        //------创建下拉列表-------
+        function showProjectOptions(result) {
+            //比较请求ID,防止网络慢导致返回结果与搜索条件不一致
+            if (result.substring(0, 8) != prorequestId.toString())
+                return;
+            //反序列化
+            var qu = '&' + 'quot' + ';';
+            var projectobjects = eval('(' + result.substring(8).replace(new RegExp(qu, 'gm'), '\"') + ')');
+            //重置请求Id
+            prorequestId = 10000000;
+            //清空上次搜索数据
+            var project_grid = document.getElementById('project_grid');
+            while (project_grid.hasChildNodes()) {
+                project_grid.removeChild(project_grid.firstChild);
+            }
+
+            //拼接页面
+            for (var i = 0; i < projectobjects.length; i++) {
+                var divElement = document.createElement('div');
+                var Id = projectobjects[i].Id;
+                divElement.setAttribute('id', Id);
+                divElement.setAttribute('class', 'align-cOut');
+                divElement.setAttribute('onclick', 'projectOptionClick("' + Id + '","' + projectobjects[i].Vanke_Company__c + '")');
+                divElement.setAttribute('style', 'cursor:pointer;border-bottom:1px solid #e7e6eb;font-size:14px;color:#2a2a2a;height:32px;line-height:32px;');
+                var divElement_1 = document.createElement('div');
+                divElement_1.setAttribute('class', 'align-c');
+                divElement_1.setAttribute('style', 'display:inline-block;padding:0 12px;');
+                var num = 1 + i;
+                //序号
+                divElement_1.appendChild(document.createTextNode(num));
+                //名称
+                var divElement_2 = document.createElement('div');
+                divElement_2.setAttribute('style', 'display:inline-block;');
+                var name = projectobjects[i].Name;
+                divElement_2.appendChild(document.createTextNode(name));
+
+                divElement.appendChild(divElement_1);
+                divElement.appendChild(divElement_2);
+
+                project_grid.appendChild(divElement);
+            }
+            //显示
+            project_grid.style.display = (projectobjects.length > 0 ? 'block' : 'none');
+        }
+
+        //-------x清空-------
+        function project_clearClick() {
+            //清空模糊搜索
+            projectClearClick();
+        };
+
+        function projectClearClick() {
+            //清空项目
+            oldprokw = '';
+            document.getElementById('thePage:theForm:partyBName').value = '';
+            document.getElementById('builder').value = '';
+            document.getElementById('project_grid').style.display = 'none';
+            document.getElementById('project_clear').style.display = 'none';
+        }
+        //-------点击项目下拉列表-------
+        function projectOptionClick(id, vankeid) {
+            //选择数据填充
+            var proName = document.getElementById(id).getElementsByTagName(
+                'div')[1].innerText;
+            document.getElementById('builder').value = proName;
+            document.getElementById('thePage:theForm:partyBName').value = proName;
+            $('#project_grid').hide();
+            $('#project_clear').css({
+                'right': 12,
+                'display': 'inline'
+            });
+            //重置页面信息
+            document.getElementById('thePage:theForm:curpage').value = 1;
+            //刷新页面数据
+            $('#running_bg').show();
+            getProgrammeContract();
+        }
+
+        //---------隐藏接待人下拉列表---------
+        document.onmouseup = function(e) {
+            var _con = e.target || e.srcElement;
+            //未在项目选择部分点击隐藏选择列表
+            if (_con.getAttribute('id') != 'project_grid' && _con.getAttribute('id') != 'builder') {
+                var proId = document.getElementById('thePage:theForm:partyBName').value;
+                var builder = document.getElementById('builder').value;
+                //未选择项目则清空选择数据
+                if (proId == '' && oldprokw != '') {
+                    if (builder == '') {
+                        projectClearClick();
+                    } else {
+                        document.getElementById('thePage:theForm:partyBName').value = builder;
+                    }
+                }
+                document.getElementById('project_grid').style.display = 'none';
+            }
+        }
+
+        function openContractInput() {
+            $('#running_bg').hide();
+            var isHasContract = document.getElementById('thePage:theForm:isHasContract').value;
+            if (isHasContract == 1) {
+                document.getElementById('isContract').checked = "checked";
+                document.getElementById('noContract').checked = "";
+                document.getElementById('SelectContract').style.display = "";
+                $('#taskId').addClass("required");
+                $('input[name="thePage:theForm:beneficiaryPerson"]').removeClass("required");
+                $('#beneficiary').hide().removeClass('selection');
+            } else {
+                $('#SelectContract').removeClass('selection').hide();
+            }
+        }
+
+        //保存数据
+        function saves() {
+            var checkStatus = $("#checkInputStatu").val();
+            if (checkStatus == "0") {
+                showError('请检查必填项数据是否有误!');
+                return;
+            } else if (checkStatus == "1") {
+                var searchBoxValid = true;
+                $(".required").each(
+                    function() {
+                        var value = $(this).val();
+                        if (!value || value.trim() == "" || value.trim() === '') {
+                            searchBoxValid = false;
+                            warnEleInput($(this));
+                        }
+                    });
+                var PayNumCount = settleParseFloat(document.getElementById('thePage:theForm:PayNumCount').value);
+                if (PayNumCount < 1) {
+                    showError('请确认<B><font color="red">补偿户数>=1</font></B>!');
+                    return;
+                }
+                var trvVD = document.getElementById('thePage:theForm:trvVD').value;
+                if (trvVD.length >= 500) {
+                    showError('请确认<B><font color="red">补偿原因最多输入500个字符!</font></B>!');
+                    warnEleInput($(trvVD));
+                    return;
+                }
+                var money = settleParseFloat(document.getElementById('thePage:theForm:Payment').value);
+                var total = 0;
+                $(".Amount").each(function() {
+                    var value = settleParseFloat($(this).val());
+                    total = total + value;
+                });
+                /** added by jiangy **/
+                var contractName = [];
+                $("input[name='builderPaySearchName']").each(function() {
+                    var value = $(this).val();
+                    if (value && value.length > 0) {
+                        contractName.push($(this).val());
+                    }
+                });
+                if (contractName.length > 0) {
+                    var repeatCheck = isRepeat(contractName);
+                    if (repeatCheck) {
+                        layer.alert('责任单位合同不允许存在相同合同，请确认！');
+                        return;
+                    }
+                }
+                /** added by jiangy end**/
+                if (searchBoxValid) {
+                    if (money == total) {
+                        save();
+                    } else {
+                        showError('请确认<B><font color="red">补偿金额=万科支付+施工方支付金额</font></B>!');
+                    }
+                } else {
+                    showError('请检查数据是否有误!');
+                }
+
+            }
+        };
+
+        function isRepeat(arr) {
+            var hash = {};
+            for (var i in arr) {
+                if (hash[arr[i]]) {
+                    return true;
+                }
+                hash[arr[i]] = true;
+            }
+            return false;
+        }
+
+        function warnEleInput(_$this) {
+            var warnVal = _$this.val();
+            if (warnVal == null || warnVal === "null" || warnVal == undefined || warnVal.trim() === '' || warnVal.trim() === "") {
+                _$this.css('border-color', 'red');
+                _$this.css('box-shadow', '0 0 15px red');
+                return false;
+            }
+            return true;
+        }
+
+        function clearWarnStyle(_$this) {
+            $(_$this).css('border', '1px solid #e7e7eb');
+            $(_$this).css('box-shadow', '');
+        }
+        //新增施工方一条数据,未保存
+        function adds() {
+            add();
+        };
+
+        //删除一条施工方数据,未保存
+        function dell(index, _this) {
+            document.getElementById('thePage:theForm:index').value = index;
+            del();
+        }
+        //查询合同
+        function getProgrammeContracts() {
+            var bulider = $("#builder").val();
+            $('#running_bg').show();
+            getProgrammeContract();
+        }
+        //有合同切换
+        function openSelectContract() {
+            document.getElementById('isContract').checked = "checked";
+            document.getElementById('noContract').checked = "";
+            $('#SelectContract').show().addClass('selection');
+            $('#beneficiary').hide().removeClass('selection');
+            $('input[name="thePage:theForm:beneficiaryPerson"]').removeClass("required").val('');
+            $('#taskId').addClass("required");
+            document.getElementById('thePage:theForm:isHasContract').value = 1;
+        }
+
+        //无合同切换
+        function closeSelectContract() {
+            document.getElementById('isContract').checked = "";
+            document.getElementById('noContract').checked = "checked";
+            $('#taskId').removeClass("required");
+            document.getElementById('taskId').value = "";
+            document.getElementById('thePage:theForm:MaintenanceContractId').value = "";
+            document.getElementById('thePage:theForm:isHasContract').value = 0;
+            $('input[name="thePage:theForm:beneficiaryPerson"]').addClass("required");
+            $('#SelectContract').hide().removeClass('selection');
+            $('#beneficiary').show().addClass('selection');
+        }
+
+        //打开合同弹出框
+        function openContractWind(contractType, index, name) {
+            document.getElementById('thePage:theForm:contractType').value = contractType;
+            if (contractType == 1) {
+                document.getElementById('thePage:theForm:partyBName').value = name;
+                document.getElementById('thePage:theForm:index').value = index;
+                document.getElementById('builder').value = name;
+                $(".WarrantyBalance").show();
+            } else {
+                $(".WarrantyBalance").hide();
+            }
+            $('#running_bg').show();
+            getProgrammeContract();
+            document.getElementById("zhezhao").style.display = "block";
+            document.getElementById("PopupBox").style.display = "block";
+
+        }
+        //合同数据加载后调用
+        function getProgrammeContractFun() {
+            $('#running_bg').hide();
+            var contractType = document.getElementById('thePage:theForm:contractType').value;
+            if (contractType == 1) {
+                $(".WarrantyBalance").show();
+            } else {
+                $(".WarrantyBalance").hide();
+            }
+            var name = document.getElementById('thePage:theForm:partyBName').value;
+            document.getElementById('builder').value = name;
+            if (name) {
+                $('#project_clear').css({
+                    'right': 12,
+                    'display': 'inline'
+                });
+            }
+        }
+
+        function selectContract(ProgrammeConttId, ProgrammeConttName, BuilderName) {
+            var contractType = document.getElementById('thePage:theForm:contractType').value;
+            document.getElementById('thePage:theForm:ProgrammeConttId').value = ProgrammeConttId;
+            if (contractType == 1) {
+                selectedContract();
+            } else {
+                document.getElementById('taskId').value = ProgrammeConttName + "  " + BuilderName;
+                document.getElementById('thePage:theForm:MaintenanceContractId').value = ProgrammeConttId;
+                clearWarnStyle(document.getElementById('taskId'));
+                closeWindow();
+            }
+        }
+        //关闭窗口,清空数据
+        function closeWindow() {
+            document.getElementById("zhezhao").style.display = "none";
+            document.getElementById("PopupBox").style.display = "none";
+            closeContractWindow();
+        }
+
+        //返回列表
+        function goBack() {
+            window.location.href = window.location.origin + "/apex/SVC_CustomerCompensation";
+        }
+
+        var successDialog = function() {
+            layer.confirm('保存成功！', {
+                time: 0,
+                icon: 1,
+                btn: ['确定'],
+                closeBtn: 0,
+                yes: function(index) {
+                    layer.close(index);
+                    goBack();
+                }
+            });
+        }
+
+        //-------选择页--------
+        function select_page() {
+            var curpage = document.getElementById('thePage:theForm:curpage');
+            var totalpage = document
+                .getElementById('thePage:theForm:totalpage').value;
+            var pag_num = document.getElementById('pag_num').value;
+            var num = parseInt(pag_num);
+            //有效输入
+            if (num > 0) {
+                //输入过大
+                if (num > totalpage) {
+                    document.getElementById('pag_num').value = curpage.value;
+                    return;
+                } else {
+                    //传递参数
+                    curpage.value = num;
+                    //刷新数据
+                    $('#running_bg').show();
+                    getProgrammeContract();
+                }
+            } else {
+                //设置当前页
+                document.getElementById('pag_num').value = curpage.value;
+            }
+        };
+
+        //------上一页-------
+        function lastPage() {
+            var curpage = document.getElementById('thePage:theForm:curpage');
+            //最小页
+            if (curpage.value == 1) {
+                return;
+            } else {
+                //传递参数
+                curpage.value = parseInt(curpage.value) - 1;
+                //刷新数据
+                $('#running_bg').show();
+                getProgrammeContract();
+            }
+        };
+
+        //------下一页-------
+        function nextPage() {
+            var totalpage = document.getElementById('thePage:theForm:totalpage').value;
+            var curpage = document.getElementById('thePage:theForm:curpage');
+            //最大页
+            if (parseInt(curpage.value) + 1 > totalpage) {
+                return;
+            } else {
+                //传递参数
+                curpage.value = parseInt(curpage.value) + 1;
+                //刷新数据
+                $('#running_bg').show();
+                getProgrammeContract();
+            }
+        };
+
+        function changeExtraPay(_this) {
+            var checkValue = $(_this).val();
+            // 质保金额
+            var extralMoney = $(_this).parent().prev().find("input").val();
+            if (extralMoney == '' || extralMoney == undefined || extralMoney == null || !/^(([0-9]{1,3}([,]{1}[0-9]{3})?([,]{1}?[0-9]{3})?|[0-9]{1,9})(\.{1}[0-9]{1,2})?)$/.test(extralMoney)) {
+                extralMoney = '0.00';
+            }
+            extralMoney = extralMoney.replace(',', '');
+            var splusMoney = parseFloat(parseFloat(extralMoney * checkValue).toFixed(2));
+            var extraPayElem = $(_this).parent().next();
+            $(extraPayElem.find("span")[1]).text(splusMoney);
+            extraPayElem.children("input").val(splusMoney);
+            var resultVal = parseFloat(parseFloat(extralMoney).toFixed(2)) + parseFloat(parseFloat(splusMoney).toFixed(2));
+            var payTotalElem = $(_this).parent().next().next().next();
+
+            $(payTotalElem.find("span")[1]).text(resultVal);
+            payTotalElem.children("input").val(resultVal);
+            reCountVal();
+        }
+
+        //标题点击效果
+        function selectionControl(_this) {
+            var isHasClass = $(_this).hasClass('reverse-90');
+            if (isHasClass) {
+                $(_this).removeClass("reverse-90");
+                $("." + $(_this).attr("target")).show();
+            } else {
+                $(_this).addClass("reverse-90");
+                $("." + $(_this).attr("target")).hide();
+            }
+        }
+    </script>
+
+    </html>
+</apex:page>

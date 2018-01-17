@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Vue-1.0生命周期</title>
+    <script src="../dist/js/v1/vue.js"></script>
+</head>
+
+<body>
+    <div id="app">
+
+    </div>
+</body>
+<script>
+    //https://v1-cn.vuejs.org/api/
+    new Vue({
+        el: "#app",
+        data: {
+            msg: 'Hello Vue1.0'
+        },
+        init: function() {
+            console.info('1.0 init method ' + this.msg);
+        },
+        created: function() {
+            console.info('2.0 created method ' + this.msg);
+        },
+        beforeCompile: function() {
+            console.info('3.0 beforeCompile method ' + this.msg);
+        },
+        compiled: function() {
+            console.info('4.0 compiled method ' + this.msg);
+        },
+        ready: function() {
+            console.info('5.0 ready method ' + this.msg);
+        },
+        attached: function() {
+            console.info('6.0 attached method ' + this.msg);
+        },
+        detached: function() {
+            console.info('7.0 detached method ' + this.msg);
+        },
+        beforeDestroy: function() {
+            console.info('8.0 beforeDestroy method ' + this.msg);
+        },
+        destroyed: function() {
+            console.info('8.0 destroyed method ' + this.msg);
+        },
+        methods: {}
+    });
+</script>
+
+</html>
