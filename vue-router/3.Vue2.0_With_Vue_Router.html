@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Vue 2.0中使用VueRouter</title>
+    <script src="../dist/js/v2/vue.js"></script>
+    <script src="../dist/js/v2/vue-router.js"></script>
+</head>
+
+<body>
+    <div id="app">
+        <router-link to="/login">登录</router-link>
+        <router-link to="/register/Jhon">注册</router-link>
+        <!-- 显示区域 -->
+        <router-view></router-view>
+    </div>
+</body>
+<script>
+    /** 定义组件 **/
+    var App = Vue.extend({});
+    /** 定义登录组件 **/
+    var login = Vue.extend({
+        template: "<h2>登录</h2>"
+    });
+    /** 定义注册组件 **/
+    var register = Vue.extend({
+        template: "<h2>注册{{username}}</h2>",
+        data: function() {
+            return {
+                username: ''
+            }
+        },
+        created: function() {
+            this.username = this.$route.params.username
+        }
+    });
+
+    /** 实例化vueReouter对象，和Vue1.0不同的是，这里可以直接将路由规则作为构造函数的参数传递 **/
+    var vueRouter = new VueRouter({
+        routes: [{
+            path: '/',
+            redirect: '/login'
+        }, {
+            path: '/login',
+            component: login
+        }, {
+            path: '/register/:username',
+            component: register
+        }]
+    });
+
+    /** 使得路由生效 这个和Vue1.0中使用vueRouter.start来使得路由生效的写法上不同 **/
+    new Vue({
+        el: "#app",
+        router: vueRouter
+    });
+</script>
+
+</html>

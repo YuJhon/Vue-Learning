@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Vue 中Watch的使用监控data属性</title>
+    <script src="../dist/js/v1/vue.js"></script>
+</head>
+
+<body>
+    <div id="app">
+        <input type="text" v-model="firstName">
+        <input type="text" v-model="lastName">
+        <br/> {{fullName}}
+    </div>
+</body>
+<script>
+    new Vue({
+        el: "#app",
+        data: {
+            firstName: "Jhon",
+            lastName: "Rain",
+            fullName: "Jhon.Rain"
+        },
+        watch: {
+            'firstName': function(newVal, oldVal) {
+                this.fullName = this.firstName + '.' + this.lastName;
+            }
+        }
+    });
+</script>
+
+</html>

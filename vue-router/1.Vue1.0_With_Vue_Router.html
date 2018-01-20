@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Vue 1.0 中使用Vue Router</title>
+    <script src="../dist/js/v1/vue.js"></script>
+    <script src="../dist/js/v1/vue-router.min.js"></script>
+</head>
+
+<body>
+    <div id="app">
+        <a href="#" v-link="{path:'/login'}">登录</a>
+        <a href="#" v-link="{path:'/register/100'}">注册</a>
+        <router-view></router-view>
+    </div>
+</body>
+<script>
+    // 开始路由代码的编写
+    /** 1.定义根组件 **/
+    var App = Vue.extend({});
+
+    /** 2.定义组件 **/
+    var login = Vue.extend({
+        template: "<div><h1>登录</h1></div>"
+    });
+    var register = Vue.extend({
+        template: "<div><h1>注册</h1>{{id}}</div>",
+        data: function() {
+            return {
+                id: 0
+            }
+        },
+        created: function() {
+            this.id = this.$route.params.id;
+        }
+    });
+
+    /** 3.实例化Vue-Router对象 **/
+    var vueRouter = new VueRouter();
+
+    /** 4.定义路由规则 **/
+    vueRouter.map({
+        'login': {
+            component: login
+        },
+        'register/:id': {
+            component: register
+        }
+    });
+
+    /** 5.使得vueRouter生效 **/
+    vueRouter.start(App, "#app");
+
+    /** 6.默认跳转到登录页面 **/
+    vueRouter.redirect({
+        '/': '/login'
+    })
+</script>
+
+</html>

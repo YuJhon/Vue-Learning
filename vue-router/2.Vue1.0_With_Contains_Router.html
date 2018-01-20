@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Vue 1.0中嵌套路由的使用</title>
+    <script src="../dist/js/v1/vue.js"></script>
+    <script src="../dist/js/v1/vue-router.min.js"></script>
+</head>
+
+<body>
+    <div id="app">
+        <a href="#" v-link="{path:'/account/login'}">登录</a>
+        <a href="#" v-link="{path:'/account/register'}">注册</a>
+
+        <!-- 组件的显示位置 -->
+        <router-view></router-view>
+    </div>
+</body>
+<script>
+    /** 实例化VueRouter对象 **/
+    var vueRouter = new VueRouter();
+
+    /** 定义根组件 **/
+    var App = Vue.extend({});
+
+    /** 定义父组件 **/
+    var account = Vue.extend({
+        template: "<h1>账号组件</h1><router-view><router-view>"
+    });
+
+    /** 定义子组件一 **/
+    var login = Vue.extend({
+        template: "<h2>登录</h2>"
+    });
+
+    /** 定义子组件二 **/
+    var register = Vue.extend({
+        template: "<h2>注册</h2>"
+    });
+
+    /** 定义路由规则 **/
+    vueRouter.map({
+        "account": {
+            component: account,
+            /** 在路由配置中，添加subRoutes对象，对象中设置子组件,并且父组件中必须添加<router-view>**/
+            subRoutes: {
+                'login': {
+                    component: login
+                },
+                'register': {
+                    component: register
+                }
+            }
+        }
+    });
+
+    /** 使得路由生效 **/
+    vueRouter.start(App, "#app");
+
+    /** 默认跳转到登录**/
+    vueRouter.redirect({
+        '/': '/account/login'
+    });
+</script>
+
+</html>

@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Vue Watch 监控$route对象</title>
+    <script src="../dist/js/v2/vue.js"></script>
+    <script src="../dist/js/v2/vue-router.js"></script>
+</head>
+
+<body>
+    <div id="app">
+        <router-link to="/login">登录</router-link>
+        <router-link to="/register">注册</router-link>
+        <!-- 组件显示区域 -->
+        <router-view></router-view>
+    </div>
+</body>
+<script>
+    /* Define Root Component */
+    var App = Vue.extend({});
+
+    /* Define Login Component */
+    var login = Vue.extend({
+        template: "<h2>登录</h2>"
+    });
+
+    /* Define Register Component */
+    var register = Vue.extend({
+        template: "<h2>注册</h2>"
+    });
+    /* Define Router Rule and Mapping */
+    var vueRouter = new VueRouter({
+        routes: [{
+            path: '/login',
+            component: login
+        }, {
+            path: '/register',
+            component: register
+        }, {
+            path: '/',
+            redirect: '/login'
+        }]
+    });
+
+    /* Effective Router */
+    new Vue({
+        el: "#app",
+        router: vueRouter,
+        watch: {
+            '$route': function(newVal, oldVal) {
+                console.log(newVal, oldVal);
+            }
+        }
+    });
+</script>
+
+</html>

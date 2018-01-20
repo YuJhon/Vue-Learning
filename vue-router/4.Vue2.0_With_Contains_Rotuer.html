@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Vue2.0中Vue-Router的嵌套使用</title>
+    <script src="../dist/js/v2/vue.js"></script>
+    <script src="../dist/js/v2/vue-router.js"></script>
+</head>
+
+<body>
+    <div id="app">
+        <router-link to="/account/login">登录</router-link>
+        <router-link to="/account/register">注册</router-link>
+        <!-- 显示区域 -->
+        <router-view></router-view>
+    </div>
+</body>
+<script>
+    /* 定义空组件 */
+    var App = Vue.extend({});
+    /* 定义accout父组件 */
+    var account = Vue.extend({
+        template: "<div><h1>账号信息</h1><router-view></router-view><div>"
+    });
+    /* 定义登录组件 */
+    var login = Vue.extend({
+        template: "<div><h2>登录页面</h2></div>"
+    });
+    /* 定义注册组件 */
+    var register = Vue.extend({
+        template: "<div><h2>注册页面</h2></div>"
+    });
+    /* 实例化路由信息 */
+    var vueRouter = new VueRouter({
+        routes: [{
+            path: '/account',
+            component: account,
+            children: [{
+                path: 'login',
+                component: login
+            }, {
+                path: 'register',
+                component: register
+            }]
+        }]
+    });
+    /* 使得路由生效 */
+    new Vue({
+        el: "#app",
+        router: vueRouter
+    });
+</script>
+
+</html>

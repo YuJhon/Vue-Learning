@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Vue 中使用Compute来监控属性</title>
+    <script src="../dist/js/v1/vue.js"></script>
+</head>
+
+<body>
+    <div id="app">
+        <input type="text" v-model="firstName">
+        <input type="text" v-model="lastName">
+        <br/>
+        <input type="text" v-model="fullName">
+    </div>
+</body>
+<script>
+    new Vue({
+        el: "#app",
+        data: {
+            firstName: '',
+            lastName: '',
+            fullName: ''
+        },
+        computed: {
+            /* 使用computed的时候，将fullName变成了一个计算属性
+                1.计算属性会依赖它使用的data中的属性，如果依赖的属性中的值发生变化，则会重新调用计算属性的方法
+                2.如果它所依赖的这些属性没有发生改变，那么计算属性的值是从缓存中获取，而不是重新编译，这样的话性能就会高一些，
+                所以vue中尽可能的使用computed替代watch
+            */
+            fullName: function() {
+                return this.firstName + '.' + this.lastName;
+            }
+        }
+    });
+</script>
+
+</html>
