@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>子组件向父组件传值</title>
+    <script src="../dist/js/v1/vue.js"></script>
+</head>
+
+<body>
+    <template id="sub">
+        <button @click="sendData">子组件向父组件传值</button>
+    </template>
+    <div id="app">
+        <sub v-on:send="getData"></sub>
+    </div>
+</body>
+<script>
+    new Vue({
+        el: "#app",
+        methods: {
+            getData: function(input) {
+                alert(input);
+            }
+        },
+        components: {
+            'sub': {
+                template: "#sub",
+                methods: {
+                    sendData: function() {
+                        this.$emit('send', 'Jhon Rain');
+                    }
+                }
+            }
+        }
+    });
+</script>
+
+</html>

@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>父组件向子组件传值</title>
+    <script src="../dist/js/v1/vue.js"></script>
+</head>
+
+<body>
+    <div id="app">
+        <sub :name="name"></sub>
+    </div>
+    <template id="sub">
+        {{name}}
+    </template>
+</body>
+<script>
+    new Vue({
+        el: "#app",
+        data: {
+            name: 'JhonRain'
+        },
+        components: {
+            'sub': {
+                template: "#sub",
+                props: ['name']
+            }
+        }
+    });
+</script>
+
+</html>

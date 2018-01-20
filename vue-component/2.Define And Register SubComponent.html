@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>V1.0定义和注册子组件</title>
+    <script src="../dist/js/v1/vue.js"></script>
+</head>
+
+<body>
+    <div id="app">
+        <account></account>
+        <!-- <login></login> -->
+        <register></register>
+    </div>
+</body>
+<script>
+    /** 定义全局组件 写法3（推荐写法） 2.0中的写法需要注意：最好养成最外层都有一个根节点**/
+    Vue.component('account', {
+        template: "<div><h1>账号组件</h1><login></login></div>",
+        /* 在账号组件中定义登录子组件 */
+        components: {
+            'login': {
+                template: '<h2>登录子组件</h2>'
+            }
+        }
+    });
+    new Vue({
+        el: '#app',
+        components: {
+            'register': {
+                template: '<h2>注册子组件 app</h2>'
+            }
+        }
+    });
+</script>
+
+</html>

@@ -3,17 +3,11 @@
 
 <head>
     <meta charset="UTF-8">
-    <title>Vue 2.0中使用原生的Css控制显示隐藏动画</title>
+    <title>Vue 2.0中使用AnimateCss控制显示隐藏动画</title>
+    <link rel="stylesheet" href="../dist/css/plugin/animate.css">
     <style>
-        .show-enter-active,
-        .show-leave-active {
+        .show {
             transition: all .4s ease;
-            padding-left: 0;
-        }
-        
-        .show-enter,
-        .show-leave-active {
-            padding-left: 100px;
         }
     </style>
     <script src="../dist/js/v2/vue.js"></script>
@@ -22,8 +16,8 @@
 <body>
     <div id="app">
         <button @click="toggle">隐藏/显示控制</button><br/>
-        <transition name="show">
-            <div v-show="isshow">{{msg}}</div>
+        <transition enter-active-class="fadeInRight" leave-active-class="fadeOutRight">
+            <div v-show="isshow" class="animated" class="show">{{msg}}</div>
         </transition>
     </div>
 </body>
@@ -32,7 +26,7 @@
         el: "#app",
         data: {
             isshow: false,
-            msg: 'Vue 2.0 Animation!'
+            msg: 'Vue 2.0 Apply AnimateCss!'
         },
         methods: {
             toggle: function() {

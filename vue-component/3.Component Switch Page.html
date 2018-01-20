@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>实现组件动态切换</title>
+    <script src="../dist/js/v1/vue.js"></script>
+</head>
+
+<body>
+    <div id="app">
+        <a href="#" @click="tabName='login'">登录</a>|
+        <a href="#" @click="tabName='register'">注册</a>
+        <component :is="tabName"></component>
+    </div>
+</body>
+<script>
+    /* 登录组件定义 */
+    Vue.component('login', {
+        template: "<div>登录页面</div>"
+    });
+    /* 注册组件定义 */
+    Vue.component('register', {
+        template: "<div>注册页面</div>"
+    });
+    new Vue({
+        el: "#app",
+        data: {
+            tabName: "login"
+        }
+    });
+</script>
+
+</html>

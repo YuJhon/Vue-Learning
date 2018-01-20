@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>V1.0定义和注册全局组件</title>
+    <script src="../dist/js/v1/vue.js"></script>
+</head>
+
+<body>
+    <div id="app">
+        <account></account>
+        <login></login>
+        <register></register>
+    </div>
+    <!-- 模板定义 方式1（推荐写法） -->
+    <template id="account">
+        {{msg}}
+        <a @click="loginInfo" href="#">登录</a>  | <a href="#">注册</a>
+    </template>
+    <!-- 模板定义 方式2 -->
+    <script type="x-template" id="account1">
+        <a href="#">登录1</a> | <a href="#">注册1</a>
+    </script>
+</body>
+<script>
+    /** 定义全局组件 写法1 **/
+    // 1.定义
+    var login = Vue.extend({
+        template: "<h1>登录页面</h1>"
+    });
+    // 2.注册
+    Vue.component('login', login);
+
+    /** 定义全局组件 写法2 **/
+    Vue.component('register', {
+        template: '<h1>注册页面</h1>'
+    });
+    /** 定义全局组件 写法3（推荐写法） **/
+    Vue.component('account', {
+        template: "#account",
+        /* 防止和其他的组件data冲突 */
+        data: function() {
+            return {
+                msg: '账户组件'
+            }
+        },
+        methods: {
+            loginInfo: function() {
+                alert('login');
+            }
+        }
+    });
+    new Vue({
+        el: '#app'
+    });
+</script>
+
+</html>

@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Vue 1.0中使用AnimateCss控制显示隐藏动画</title>
+    <link rel="stylesheet" href="../dist/css/plugin/animate.css">
+    <script src="../dist/js/v1/vue.js"></script>
+</head>
+
+<body>
+    <div id="app">
+        <button @click="toggle">隐藏/显示控制</button><br/>
+        <div v-show="isshow" class="animated" transition="show">Vue 1.0 With Animation Style!</div>
+    </div>
+</body>
+<script>
+    new Vue({
+        el: "#app",
+        data: {
+            isshow: false
+        },
+        methods: {
+            toggle: function() {
+                this.isshow = !this.isshow;
+            }
+        },
+        transitions: {
+            'show': {
+                enterClass: 'fadeInRight',
+                leaveClass: 'fadeOutRight'
+            }
+
+        }
+    });
+</script>
+
+</html>
