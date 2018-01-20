@@ -125,3 +125,10 @@
    + 3、进入vue-devtools-master工程 先执行npm install再执行npm run build
    + 4、进入vue-devtools-master\shells\chrome文件夹中修改mainifest.json 中的persistant为true
    + 5、打开谷歌浏览器设置--->扩展程序-->勾选开发者模式--->加载已解压的扩展程序--->选择“vue-devtools-master\shells下的chrome”文件夹，至此恭喜已经安装成功！
+
+
+
+- Webpack 学习后使用Mnit-ui和Mui的一个静态页面的效果
+![webpack-mui-mintui-效果.png](./photos/webpack/webpack-mui-mintui-效果.png)
+
+最后更新于 2018-01-20
