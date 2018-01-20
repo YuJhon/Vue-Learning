@@ -10,41 +10,59 @@
     <!-- 使用MUI中的9宫格实现导航区域 -->
     <div class="mui-content">
 		        <ul class="mui-table-view mui-grid-view mui-grid-9">
-		            <li class="mui-table-view-cell mui-media mui-col-xs-4 mui-col-sm-3"><a href="#">
+		            <li class="mui-table-view-cell mui-media mui-col-xs-4 mui-col-sm-3">
+                        <router-link to="/home">
 		                    <span class="mui-icon mui-icon-home"></span>
-		                    <div class="mui-media-body">Home</div></a>
+		                    <div class="mui-media-body">Home</div>
+                        </router-link>
                     </li>
-		            <li class="mui-table-view-cell mui-media mui-col-xs-4 mui-col-sm-3"><a href="#">
-		                    <span class="mui-icon mui-icon-email"><span class="mui-badge">5</span></span>
-		                    <div class="mui-media-body">Email</div></a>
+		            <li class="mui-table-view-cell mui-media mui-col-xs-4 mui-col-sm-3">
+                        <router-link to="/news/newslist">
+		                    <span class="mui-icon mui-icon-email"></span><!-- <span class="mui-badge">5</span> -->
+		                    <div class="mui-media-body">Email</div>
+                        </router-link>
                     </li>
-		            <li class="mui-table-view-cell mui-media mui-col-xs-4 mui-col-sm-3"><a href="#">
+		            <li class="mui-table-view-cell mui-media mui-col-xs-4 mui-col-sm-3">
+                        <router-link to="/goods/goodslist">
 		                    <span class="mui-icon mui-icon-chatbubble"></span>
-		                    <div class="mui-media-body">Chat</div></a>
+		                    <div class="mui-media-body">Chat</div>
+                        </router-link>
                     </li>
-		            <li class="mui-table-view-cell mui-media mui-col-xs-4 mui-col-sm-3"><a href="#">
+		            <li class="mui-table-view-cell mui-media mui-col-xs-4 mui-col-sm-3">
+                        <router-link to="/vide">
 		                    <span class="mui-icon mui-icon-location"></span>
-		                    <div class="mui-media-body">location</div></a>
+		                    <div class="mui-media-body">location</div>
+                        </router-link>
                     </li>
-		            <li class="mui-table-view-cell mui-media mui-col-xs-4 mui-col-sm-3"><a href="#">
+		            <li class="mui-table-view-cell mui-media mui-col-xs-4 mui-col-sm-3">
+                        <router-link to="/search">
 		                    <span class="mui-icon mui-icon-search"></span>
-		                    <div class="mui-media-body">Search</div></a>
+		                    <div class="mui-media-body">Search</div>
+                        </router-link>
                     </li>
-		            <li class="mui-table-view-cell mui-media mui-col-xs-4 mui-col-sm-3"><a href="#">
+		            <li class="mui-table-view-cell mui-media mui-col-xs-4 mui-col-sm-3">
+                        <router-link to="/phone">
 		                    <span class="mui-icon mui-icon-phone"></span>
-		                    <div class="mui-media-body">Phone</div></a>
+		                    <div class="mui-media-body">Phone</div>
+                        </router-link>
                     </li>
-		            <li class="mui-table-view-cell mui-media mui-col-xs-4 mui-col-sm-3"><a href="#">
+		            <li class="mui-table-view-cell mui-media mui-col-xs-4 mui-col-sm-3">
+                        <router-link to="/setting">
 		                    <span class="mui-icon mui-icon-gear"></span>
-		                    <div class="mui-media-body">Setting</div></a>
+		                    <div class="mui-media-body">Setting</div>
+                        </router-link>
                     </li>
-		            <li class="mui-table-view-cell mui-media mui-col-xs-4 mui-col-sm-3"><a href="#">
+		            <li class="mui-table-view-cell mui-media mui-col-xs-4 mui-col-sm-3">
+                        <router-link to="/info">
 		                    <span class="mui-icon mui-icon-info"></span>
-		                    <div class="mui-media-body">about</div></a>
-                            </li>
-		           <li class="mui-table-view-cell mui-media mui-col-xs-4 mui-col-sm-3"><a href="#">
+		                    <div class="mui-media-body">about</div>
+                        </router-link>
+                    </li>
+		            <li class="mui-table-view-cell mui-media mui-col-xs-4 mui-col-sm-3">
+                        <router-link to="/more">
 		                    <span class="mui-icon mui-icon-more"></span>
-		                    <div class="mui-media-body">more</div></a>
+		                    <div class="mui-media-body">more</div>
+                        </router-link>
                     </li>
 		        </ul> 
 		</div>
@@ -112,12 +130,48 @@ export default {
     border-right: 0px;
     border-bottom: 0px;
 }
-.mui-icon-home:before{
+.mui-icon-home:before,
+.mui-icon-email:before,
+.mui-icon-location:before,
+.mui-icon-search:before,
+.mui-icon-chatbubble:before,
+.mui-icon-phone:before,
+.mui-icon-gear:before,
+.mui-icon-info:before,
+.mui-icon-more:before
+{
     content:'';
-    background-image:url("../../statics/imgs/1.png");
     display:inline-block;
     width:50px;
     height:50px;
     background-repeat: round;
+}
+
+.mui-icon-home:before{
+    background-image:url("../../statics/imgs/1.png");
+}
+.mui-icon-email:before{
+    background-image:url("../../statics/imgs/2.png");
+}
+.mui-icon-location:before{
+    background-image:url("../../statics/imgs/3.png");
+}
+.mui-icon-search:before{
+    background-image:url("../../statics/imgs/4.png");
+}
+.mui-icon-chatbubble:before{
+    background-image:url("../../statics/imgs/1.png");
+}
+.mui-icon-phone:before{
+    background-image:url("../../statics/imgs/2.png");
+}
+.mui-icon-gear:before{
+    background-image:url("../../statics/imgs/3.png");
+}
+.mui-icon-info:before{
+    background-image:url("../../statics/imgs/4.png");
+}
+.mui-icon-more:before{
+    background-image:url("../../statics/imgs/1.png");
 }
 </style>
