@@ -22,6 +22,8 @@
 <script>
 /* 获取静态数据 */
 import newListDatas from '../../../statics/data/news/list.json';
+/* 公共组件的导入 */
+import common from '../../kits/common.js';
 export default {
   data(){
       return {

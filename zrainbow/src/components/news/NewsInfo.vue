@@ -11,7 +11,10 @@
 </template>
 <!--  -->
 <script>
+/* 静态数据的导入 */
 import newInfoData from '../../../statics/data/news/info.json';
+/* 公共组件的导入 */
+import common from '../../kits/common.js';
 export default {
     data(){
         return {

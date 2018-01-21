@@ -73,6 +73,8 @@
 import { Toast } from 'mint-ui';
 /* 获取静态数据 */
 import picDatas from '../../statics/data/home/pictureInfo.json';
+/* 公共组件的导入 */
+import common from '../kits/common.js';
 export default {
   data() {
     return {
@@ -87,6 +89,7 @@ export default {
           /*
           // 1.确定url
           var url = '';
+          common.apidomain;
           // 2.调用$http.get()
           this.$http.get(url).then(resp=>{
               var data = resp.body;
