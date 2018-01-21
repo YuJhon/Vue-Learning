@@ -31,6 +31,10 @@ module.exports = {
             {
                 test: /.vue$/, // 解析 .vue 组件页面文件
                 loader: 'vue-loader' //
+            },
+            {
+                test: /.json$/, // 解析 .json文件
+                loader: 'json-loader'
             }
         ]
     },

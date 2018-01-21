@@ -9,68 +9,70 @@
     </mt-swipe>
     <!-- 使用MUI中的9宫格实现导航区域 -->
     <div class="mui-content">
-		        <ul class="mui-table-view mui-grid-view mui-grid-9">
-		            <li class="mui-table-view-cell mui-media mui-col-xs-4 mui-col-sm-3">
-                        <router-link to="/home">
-		                    <span class="mui-icon mui-icon-home"></span>
-		                    <div class="mui-media-body">Home</div>
-                        </router-link>
-                    </li>
-		            <li class="mui-table-view-cell mui-media mui-col-xs-4 mui-col-sm-3">
-                        <router-link to="/news/newslist">
-		                    <span class="mui-icon mui-icon-email"></span><!-- <span class="mui-badge">5</span> -->
-		                    <div class="mui-media-body">Email</div>
-                        </router-link>
-                    </li>
-		            <li class="mui-table-view-cell mui-media mui-col-xs-4 mui-col-sm-3">
-                        <router-link to="/goods/goodslist">
-		                    <span class="mui-icon mui-icon-chatbubble"></span>
-		                    <div class="mui-media-body">Chat</div>
-                        </router-link>
-                    </li>
-		            <li class="mui-table-view-cell mui-media mui-col-xs-4 mui-col-sm-3">
-                        <router-link to="/vide">
-		                    <span class="mui-icon mui-icon-location"></span>
-		                    <div class="mui-media-body">location</div>
-                        </router-link>
-                    </li>
-		            <li class="mui-table-view-cell mui-media mui-col-xs-4 mui-col-sm-3">
-                        <router-link to="/search">
-		                    <span class="mui-icon mui-icon-search"></span>
-		                    <div class="mui-media-body">Search</div>
-                        </router-link>
-                    </li>
-		            <li class="mui-table-view-cell mui-media mui-col-xs-4 mui-col-sm-3">
-                        <router-link to="/phone">
-		                    <span class="mui-icon mui-icon-phone"></span>
-		                    <div class="mui-media-body">Phone</div>
-                        </router-link>
-                    </li>
-		            <li class="mui-table-view-cell mui-media mui-col-xs-4 mui-col-sm-3">
-                        <router-link to="/setting">
-		                    <span class="mui-icon mui-icon-gear"></span>
-		                    <div class="mui-media-body">Setting</div>
-                        </router-link>
-                    </li>
-		            <li class="mui-table-view-cell mui-media mui-col-xs-4 mui-col-sm-3">
-                        <router-link to="/info">
-		                    <span class="mui-icon mui-icon-info"></span>
-		                    <div class="mui-media-body">about</div>
-                        </router-link>
-                    </li>
-		            <li class="mui-table-view-cell mui-media mui-col-xs-4 mui-col-sm-3">
-                        <router-link to="/more">
-		                    <span class="mui-icon mui-icon-more"></span>
-		                    <div class="mui-media-body">more</div>
-                        </router-link>
-                    </li>
-		        </ul> 
+            <ul class="mui-table-view mui-grid-view mui-grid-9">
+                <li class="mui-table-view-cell mui-media mui-col-xs-4 mui-col-sm-3">
+                    <router-link to="/home">
+                        <span class="mui-icon mui-icon-home"></span>
+                        <div class="mui-media-body">首页</div>
+                    </router-link>
+                </li>
+                <li class="mui-table-view-cell mui-media mui-col-xs-4 mui-col-sm-3">
+                    <router-link to="/news/newslist">
+                        <span class="mui-icon mui-icon-email"></span><!-- <span class="mui-badge">5</span> -->
+                        <div class="mui-media-body">新闻资讯</div>
+                    </router-link>
+                </li>
+                <li class="mui-table-view-cell mui-media mui-col-xs-4 mui-col-sm-3">
+                    <router-link to="/goods/goodslist">
+                        <span class="mui-icon mui-icon-chatbubble"></span>
+                        <div class="mui-media-body">Chat</div>
+                    </router-link>
+                </li>
+                <li class="mui-table-view-cell mui-media mui-col-xs-4 mui-col-sm-3">
+                    <router-link to="/vide">
+                        <span class="mui-icon mui-icon-location"></span>
+                        <div class="mui-media-body">location</div>
+                    </router-link>
+                </li>
+                <li class="mui-table-view-cell mui-media mui-col-xs-4 mui-col-sm-3">
+                    <router-link to="/search">
+                        <span class="mui-icon mui-icon-search"></span>
+                        <div class="mui-media-body">Search</div>
+                    </router-link>
+                </li>
+                <li class="mui-table-view-cell mui-media mui-col-xs-4 mui-col-sm-3">
+                    <router-link to="/phone">
+                        <span class="mui-icon mui-icon-phone"></span>
+                        <div class="mui-media-body">Phone</div>
+                    </router-link>
+                </li>
+                <li class="mui-table-view-cell mui-media mui-col-xs-4 mui-col-sm-3">
+                    <router-link to="/setting">
+                        <span class="mui-icon mui-icon-gear"></span>
+                        <div class="mui-media-body">Setting</div>
+                    </router-link>
+                </li>
+                <li class="mui-table-view-cell mui-media mui-col-xs-4 mui-col-sm-3">
+                    <router-link to="/info">
+                        <span class="mui-icon mui-icon-info"></span>
+                        <div class="mui-media-body">about</div>
+                    </router-link>
+                </li>
+                <li class="mui-table-view-cell mui-media mui-col-xs-4 mui-col-sm-3">
+                    <router-link to="/more">
+                        <span class="mui-icon mui-icon-more"></span>
+                        <div class="mui-media-body">more</div>
+                    </router-link>
+                </li>
+            </ul> 
 		</div>
   </div>
 </template>
-<!--  -->
+<!-- 脚本编写 -->
 <script>
 import { Toast } from 'mint-ui';
+/* 获取静态数据 */
+import picDatas from '../../statics/data/home/pictureInfo.json';
 export default {
   data() {
     return {
@@ -78,7 +80,7 @@ export default {
     };
   },
   created(){
-      this.list = this.getimgs();
+    this.getimgs();
   },
   methods:{
       getimgs(){
@@ -91,20 +93,17 @@ export default {
               if(data.status == '0'){
                   return data.message;
               }else{
-                  Toast('系统繁忙，请稍后再试！');
+                  Toast('系统繁忙，请稍后再试1！');
                   return;
               }
           }).then(resp=>{
-              Toast('系统繁忙，请稍后再试！');
+              Toast('系统繁忙，请稍后再试！'+resp);
               return;
           });
           */
+          
           // 接口还未实现，后期再实现
-          return [
-              { url: "1", image: "http://jhonrainproject.oss-cn-shanghai.aliyuncs.com/vue/timg.jpg" },
-              { url: "2", image: "http://jhonrainproject.oss-cn-shanghai.aliyuncs.com/vue/timg%20%282%29.jpg" },
-              { url: "3", image: "http://jhonrainproject.oss-cn-shanghai.aliyuncs.com/vue/timg%20%281%29.jpg" }
-          ]; 
+          this.list = picDatas.data;
       }
   }
 };
@@ -117,12 +116,13 @@ export default {
 .mint-swipe-item {
   width: 100%;
   height: 200px;
-  background-color: aqua;
+  background-color: rgb(74, 75, 75);
 }
 .mint-swipe-item img{
   width: 100%;
   height:200px;
 }
+/* 重写样式 */
 .mui-content,.mui-grid-view.mui-grid-9{
     background-color: #fff;
 }
