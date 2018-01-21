@@ -7,6 +7,7 @@ import App from './App.vue';
 import home from './components/Home.vue';
 import shopCar from './components/shopcar/Car.vue';
 import newsList from './components/news/NewsList.vue';
+import newsInfo from './components/news/NewsInfo.vue';
 import vueRouter from 'vue-router';
 Vue.use(vueRouter);
 var route = new vueRouter({
@@ -14,10 +15,11 @@ var route = new vueRouter({
     linkActiveClass: 'mui-active',
     // 路由mapping
     routes: [
-        { path: '/', redirect: '/home' },
-        { path: '/home', component: home },
-        { path: '/news/newslist', component: newsList },
-        { path: '/shopcar', component: shopCar }
+        { path: '/', redirect: '/home' }, // 默认跳转到首页
+        { path: '/home', component: home }, // 首页
+        { path: '/news/newslist', component: newsList }, // 资讯列表
+        { path: '/news/newsInfo/:id', component: newsInfo }, // 资讯详情
+        { path: '/shopcar', component: shopCar } // 购物车
     ]
 });
 

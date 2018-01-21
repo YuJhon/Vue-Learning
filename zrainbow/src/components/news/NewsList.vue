@@ -3,7 +3,7 @@
   <div id="tmpl">
     <ul class="mui-table-view">
         <li class="mui-table-view-cell mui-media" v-for="item in list" :key="item.id">
-            <router-link href="#" to="">
+            <router-link v-bind="{to:'/news/newsInfo/'+item.id}" >
                 <img class="mui-media-object mui-pull-left" :src="item.icon">
                 <div class="mui-media-body">
                     {{item.title}}
