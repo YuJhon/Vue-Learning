@@ -129,6 +129,9 @@
 
 
 - Webpack 学习后使用Mnit-ui和Mui的一个静态页面的效果
-![webpack-mui-mintui-效果.png](./photos/webpack/webpack-mui-mintui-效果.png)
+    ![webpack-mui-mintui-效果.png](./photos/webpack/webpack-mui-mintui-效果.png)
 
-最后更新于 2018-01-20
+- 实战项目演练，请参考：[zrainbow](./zrainbow/ReadMe.md)
+    ![zrainbow 项目](./zrainbow/doc/photos/4.导航菜单的图标替换.png)
+
+最后更新于 2018-01-21 jiangyu(JhonRain)
