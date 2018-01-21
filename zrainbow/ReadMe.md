@@ -36,7 +36,7 @@
 
 ![NewsList时间过滤器格式化日期](./doc/photos/5.NewsList时间过滤器格式化日期.png)
 
-- 5.资讯详情页面实现(为了演示项目内容摘抄自[个人生活博客](www.jhonrain.org))
+- 5.资讯详情页面实现(为了演示项目内容摘抄自[个人生活博客](https://www.jhonrain.org))
 
 ![详情页面效果](./doc/photos/8.查看新闻资讯的详情页面.png)
 
