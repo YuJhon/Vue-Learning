@@ -1,0 +1,26 @@
+{
+    "status": "0",
+    "msg": "",
+    "data": [{
+            "id": 4,
+            "floor": "1",
+            "username": "Jhon",
+            "cTime": "2018-01-23T13:06:12.000Z",
+            "content": "Fighting！"
+        },
+        {
+            "id": 5,
+            "floor": "3",
+            "username": "jj",
+            "cTime": "2018-01-23T13:16:14.000Z",
+            "content": "大宇哥，加油哦！"
+        },
+        {
+            "id": 6,
+            "floor": "3",
+            "username": "宇哥",
+            "cTime": "2018-01-23T15:09:32.000Z",
+            "content": "新起点，新方向！"
+        }
+    ]
+}

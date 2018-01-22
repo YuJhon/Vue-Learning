@@ -11,7 +11,7 @@
       </div>
       <!-- 评论区域 -->
       <comment v-bind:id="id">
-          
+
       </comment>
   </div>
 </template>
@@ -22,7 +22,7 @@ import newInfoData from '../../../statics/data/news/info.json';
 /* 公共组件的导入 */
 import common from '../../kits/common.js';
 /* 评论组件的导入 */
-import comment from '../subcommon/comment.vue';
+import comment from '../subcommon/Comment.vue';
 export default {
     data(){
         return {

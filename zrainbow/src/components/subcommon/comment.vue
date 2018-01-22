@@ -23,6 +23,10 @@
             </ul>
           </div>
       </div>
+      <!-- 3.记载更多 -->
+      <div class="more-btn">
+        <mt-button type="danger" size="large" plain @click="moreComments">更多</mt-button>
+      </div>
   </div>
 </template>
 <!-- 脚本控制 -->
@@ -34,10 +38,15 @@
     /* 模拟的静态数据 */
     import postRes from '../../../statics/data/comment/post.json';
     import listRes from '../../../statics/data/comment/list.json';
+    import moreRes from '../../../statics/data/comment/more.json';
     export default {
         data(){
             return {
+                /* 分页参数 */
+                pageIndex:1,
+                /* 评论内容 */
                 comment:'',
+                /* 评论列表 */
                 commentList:[]
             }
         },
@@ -75,9 +84,14 @@
                 this.comment = '';
             },
             getCommentList(pageIndex){
-                pageIndex = pageIndex | 1;
+                pageIndex = pageIndex || 1;
                 // 接口待定 GET方法获取评论列表
-                this.commentList = listRes.data;
+                this.commentList = this.commentList.concat(listRes.data);
+            },
+            moreComments(){
+                this.pageIndex++ ;
+                //getCommentList(this.pageIndex);
+                this.commentList = this.commentList.concat(moreRes.data);
             }
         }
     }
@@ -101,5 +115,8 @@
     color: #6d6d72;
     font-size: 15px;
     background-color: rgba(0,0,0,0.1);
+}
+.more-btn{
+    padding-bottom:5px;
 }
 </style>
