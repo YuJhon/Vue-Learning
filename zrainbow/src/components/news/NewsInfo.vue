@@ -1,12 +1,18 @@
 <!--  -->
 <template>
   <div id="tmpl">
+      <!-- 资讯的标题 -->
       <div class="header">
           <h4 v-text="info.title"></h4>
           <p>{{info.addTime | datefmt('YYYY-MM-DD')}} {{info.click}}浏览次数.</p>
       </div>
+      <!-- 资讯的内容 -->
       <div id="content" v-html="info.content">
       </div>
+      <!-- 评论区域 -->
+      <comment v-bind:id="id">
+          
+      </comment>
   </div>
 </template>
 <!--  -->
@@ -15,6 +21,8 @@
 import newInfoData from '../../../statics/data/news/info.json';
 /* 公共组件的导入 */
 import common from '../../kits/common.js';
+/* 评论组件的导入 */
+import comment from '../subcommon/comment.vue';
 export default {
     data(){
         return {
@@ -26,6 +34,9 @@ export default {
                 content:''
             }
         }
+    },
+    components:{
+        comment
     },
     created(){
         this.id = this.$route.params.id;
