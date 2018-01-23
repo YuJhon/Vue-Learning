@@ -80,7 +80,14 @@
                     console.error('系统繁忙，请稍后再试！');
                 });
                 */
+                /** 提示评论提交成 */
                 Toast(postRes.data);
+                this.commentList = [{
+                    "username": "匿名用户",
+                    "cTime": new Date(),
+                    "content": this.comment
+                }].concat(this.commentList);
+                /**清空评论内容 */
                 this.comment = '';
             },
             getCommentList(pageIndex){
