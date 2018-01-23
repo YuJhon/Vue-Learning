@@ -8,6 +8,8 @@ import home from './components/Home.vue';
 import shopCar from './components/shopcar/Car.vue';
 import newsList from './components/news/NewsList.vue';
 import newsInfo from './components/news/NewsInfo.vue';
+import photoList from './components/photo/PhotoList.vue';
+import photoInfo from './components/photo/PhotoInfo.vue';
 import vueRouter from 'vue-router';
 Vue.use(vueRouter);
 var route = new vueRouter({
@@ -19,6 +21,8 @@ var route = new vueRouter({
         { path: '/home', component: home }, // 首页
         { path: '/news/newslist', component: newsList }, // 资讯列表
         { path: '/news/newsInfo/:id', component: newsInfo }, // 资讯详情
+        { path: '/photo/photolist', component: photoList }, // 图片分享
+        { path: '/photo/photoInfo/:id', component: photoInfo }, // 图片详情页
         { path: '/shopcar', component: shopCar } // 购物车
     ]
 });
