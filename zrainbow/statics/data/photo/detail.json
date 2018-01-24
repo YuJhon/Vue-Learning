@@ -1,0 +1,16 @@
+{
+    "status": "0",
+    "msg": "",
+    "data": {
+        "id": 1,
+        "title": "ECIT•那些年•2010-2014",
+        "click": 3,
+        "addTime": "2018-01-24 21:16:33",
+        "desc": "那些年，有一种时光叫：“从2010到2014，从大一到大四，诞生了路人甲乙丙丁，造就了1321的神奇，那些年，在2014落下帷幕。。。。。。青春不散场，一生都有你!!!",
+        "photoList": [
+            "https://ss1.bdstatic.com/70cFvXSh_Q1YnxGkpoWK1HF6hhy/it/u=1563567157,1959963690&fm=27&gp=0.jpg",
+            "https://ss3.bdstatic.com/70cFv8Sh_Q1YnxGkpoWK1HF6hhy/it/u=2083460051,3106864952&fm=27&gp=0.jpg",
+            "https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1516807619591&di=f9a16b85e1b3ce5ac9cd813aa31387cf&imgtype=0&src=http%3A%2F%2Fimg1.dzwww.com%3A8080%2Ftupian%2F20150817%2F44%2F12836503687644831284.jpg"
+        ]
+    }
+}

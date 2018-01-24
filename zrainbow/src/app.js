@@ -37,6 +37,9 @@ import '../statics/mui/css/mui.min.css';
 import '../statics/css/site.css';
 Vue.use(mintui);
 
+import VuePreview from 'vue-preview';
+Vue.use(VuePreview)
+
 // 6.将vue-resource在vue中绑定，自动在vue对象实例上注入一个$http对象就可以使用ajax调用了
 import vueResource from 'vue-resource';
 Vue.use(vueResource);

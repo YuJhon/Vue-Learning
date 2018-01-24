@@ -115,6 +115,7 @@ export default {
   #desc h5{
     color:#fff;
     font-weight: bold;
+    /* background: -webkit-linear-gradient(left,#da00f9, #cff404); */
   }
   #desc p{
     color:#fff;

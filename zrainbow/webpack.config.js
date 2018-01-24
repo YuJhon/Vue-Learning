@@ -20,7 +20,7 @@ module.exports = {
                 loader: 'style-loader!css-loader!less-loader'
             },
             {
-                test: /\.(png|jpg|gif|ttf)$/, //打包 url请求的资源文件
+                test: /\.(png|jpg|gif|ttf|svg)$/, //打包 url请求的资源文件
                 loader: 'url-loader?limit=20000' //limit表示图片的大小为20K是临界值，小于20K的图片均被打包到build.js中去，请求图片就会很快
             },
             {
@@ -35,6 +35,10 @@ module.exports = {
             {
                 test: /.json$/, // 解析 .json文件
                 loader: 'json-loader'
+            },
+            {
+                test: /vue-preview.src.*?js$/,
+                loader: 'babel'
             }
         ]
     },
