@@ -71,7 +71,7 @@ export default {
       this.photoInfo = detailRes.data;
     },
     getPhotoList(){
-      listRes.data.forEach(function(item){
+      listRes.data.forEach(item =>{
         item.w = 400;
         item.h = 300;
       });
