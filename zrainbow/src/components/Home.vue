@@ -2,11 +2,12 @@
 <template>
   <div id="tmpl">
     <!-- 使用Mint-UI中的Swipe实现图片轮播 -->  
-    <mt-swipe :auto="4000">
+    <!-- <mt-swipe :auto="4000">
         <mt-swipe-item v-for="item in list" :key="item.url">
             <img :src="item.image">
         </mt-swipe-item>
-    </mt-swipe>
+    </mt-swipe> -->
+    <slide :imgs="imgs"></slide>
     <!-- 使用MUI中的9宫格实现导航区域 -->
     <div class="mui-content">
             <ul class="mui-table-view mui-grid-view mui-grid-9">
@@ -75,11 +76,16 @@ import { Toast } from 'mint-ui';
 import picDatas from '../../statics/data/home/pictureInfo.json';
 /* 公共组件的导入 */
 import common from '../kits/common.js';
+/** 轮播组件的导入 */
+import slide from './subcommon/Slide.vue';
 export default {
   data() {
     return {
-      list: []
+      imgs: []
     };
+  },
+  components:{
+      slide
   },
   created(){
     this.getimgs();
@@ -106,25 +112,13 @@ export default {
           */
           
           // 接口还未实现，后期再实现
-          this.list = picDatas.data;
+          this.imgs = picDatas.data;
       }
   }
 };
 </script>
 <!--  -->
 <style scoped>
-.mint-swipe {
-  height: 200px;
-}
-.mint-swipe-item {
-  width: 100%;
-  height: 200px;
-  background-color: rgb(74, 75, 75);
-}
-.mint-swipe-item img{
-  width: 100%;
-  height:200px;
-}
 /* 重写样式 */
 .mui-content,.mui-grid-view.mui-grid-9{
     background-color: #fff;
