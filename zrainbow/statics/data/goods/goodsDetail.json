@@ -1,0 +1,12 @@
+{
+    "status": "0",
+    "msg": "",
+    "data": {
+        "id": 1,
+        "img": "",
+        "desc": "http://vuelearn.oss-cn-shenzhen.aliyuncs.com/2018-01-25_224346.png",
+        "price": "5000",
+        "discount": "4899",
+        "click": 100
+    }
+}

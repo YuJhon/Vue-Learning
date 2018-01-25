@@ -29,9 +29,9 @@
                     </router-link>
                 </li>
                 <li class="mui-table-view-cell mui-media mui-col-xs-4 mui-col-sm-3">
-                    <router-link to="/vide">
+                    <router-link to="/goods/goodsList">
                         <span class="mui-icon mui-icon-location"></span>
-                        <div class="mui-media-body">location</div>
+                        <div class="mui-media-body">商品列表</div>
                     </router-link>
                 </li>
                 <li class="mui-table-view-cell mui-media mui-col-xs-4 mui-col-sm-3">
