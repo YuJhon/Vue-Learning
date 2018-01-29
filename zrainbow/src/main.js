@@ -12,6 +12,8 @@ import photoList from './components/photo/PhotoList.vue';
 import photoInfo from './components/photo/PhotoInfo.vue';
 import goodsList from './components/goods/GoodsList.vue';
 import goodsInfo from './components/goods/GoodsInfo.vue';
+import goodsDesc from './components/goods/GoodsDesc.vue';
+import goodsComment from './components/goods/GoodsComment.vue';
 import vueRouter from 'vue-router';
 Vue.use(vueRouter);
 var route = new vueRouter({
@@ -27,6 +29,8 @@ var route = new vueRouter({
         { path: '/photo/photoInfo/:id', component: photoInfo }, // 图片详情页
         { path: '/goods/goodsList', component: goodsList }, // 商品列表
         { path: '/goods/goodsInfo/:id', component: goodsInfo }, // 商品详细信息
+        { path: '/goods/goodsDesc/:id', component: goodsDesc }, // 商品详细信息，
+        { path: '/goods/goodsComment/:id', component: goodsComment }, // 商品详细信息
         { path: '/shopcar', component: shopCar } // 购物车
     ]
 });
