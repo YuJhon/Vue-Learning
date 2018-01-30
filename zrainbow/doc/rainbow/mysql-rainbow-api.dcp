@@ -1,0 +1,10 @@
+[ConnectionProfile]
+ConnectionType=JDBC
+Dbms=MySQL
+Description=vue-backend-api
+DisableBind=0
+Driver=com.mysql.jdbc.Driver
+JarFiles=E:\vscode-workspace\vue-learning\zrainbow\doc\rainbow\mysql-connector-java-5.1.43.jar
+LogId=root
+TrimSpaces=0
+URL=jdbc:mysql://localhost:3306/rainbow-api

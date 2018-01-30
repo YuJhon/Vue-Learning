@@ -18,7 +18,9 @@
 				<span class="mui-tab-label">会员</span>
 			</router-link>
 			<router-link class="mui-tab-item" to="/shopcar">
-				<span class="mui-icon mui-icon-contact"><span class="mui-badge">1</span></span>
+				<span class="mui-icon mui-icon-contact">
+					<span id="badge" class="mui-badge">0</span>
+				</span>
 				<span class="mui-tab-label">购物车</span>
 			</router-link>
 			<router-link class="mui-tab-item" to="/tabbar-with-map">
@@ -31,10 +33,16 @@
 
 <!-- 脚本定义 -->
 <script>
-    /*  */
-    export default {
-    
-    }
+/*  */
+import {vm,COUNT_STR} from './kits/vm.js';
+vm.$on(COUNT_STR,function(count){
+	console.info(count);
+	var badgeEle = document.getElementById('badge');
+	badgeEle.innerHTML = parseInt(badgeEle.innerHTML)+count;
+});
+export default {
+
+}
 </script>
 
 <!-- 组件样式定义 -->
