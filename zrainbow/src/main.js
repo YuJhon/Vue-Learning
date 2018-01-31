@@ -5,7 +5,6 @@ import App from './App.vue';
 
 /** 3.Step Three: 使用router-vue **/
 import home from './components/Home.vue';
-import shopCar from './components/shopcar/Car.vue';
 import newsList from './components/news/NewsList.vue';
 import newsInfo from './components/news/NewsInfo.vue';
 import photoList from './components/photo/PhotoList.vue';
@@ -14,6 +13,7 @@ import goodsList from './components/goods/GoodsList.vue';
 import goodsInfo from './components/goods/GoodsInfo.vue';
 import goodsDesc from './components/goods/GoodsDesc.vue';
 import goodsComment from './components/goods/GoodsComment.vue';
+import car from './components/shopcar/Car.vue';
 import vueRouter from 'vue-router';
 Vue.use(vueRouter);
 var route = new vueRouter({
@@ -31,7 +31,7 @@ var route = new vueRouter({
         { path: '/goods/goodsInfo/:id', component: goodsInfo }, // 商品详细信息
         { path: '/goods/goodsDesc/:id', component: goodsDesc }, // 商品详细信息，
         { path: '/goods/goodsComment/:id', component: goodsComment }, // 商品详细信息
-        { path: '/shopcar', component: shopCar } // 购物车
+        { path: '/shopcar/car', component: car } // 购物车
     ]
 });
 

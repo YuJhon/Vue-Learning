@@ -27,3 +27,20 @@ export function getItem() {
 export function removeItem() {
     localStorage.removeItem(KEY);
 }
+
+/**
+ * 5.
+ */
+export function getGoodsObject() {
+    var resObj = {}
+    var arr = getItem();
+    for (var i = 0; i < arr.length; i++) {
+        var item = arr[i];
+        if (!resObj[item.goodsId]) {
+            resObj[item.goodsId] = item.count;
+        } else {
+            var count = resObj[item.goodsId];
+            resObj[item.goodsId] = count + item.count;
+        }
+    }
+}
