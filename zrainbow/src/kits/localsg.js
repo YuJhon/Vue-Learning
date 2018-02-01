@@ -43,4 +43,5 @@ export function getGoodsObject() {
             resObj[item.goodsId] = count + item.count;
         }
     }
+    return resObj;
 }

@@ -10,7 +10,7 @@
             "available": 100,
             "tag": "热卖中"
         }, {
-            "id": 1,
+            "id": 2,
             "img": "http://vuelearn.oss-cn-shenzhen.aliyuncs.com/2018-01-25_224203.png",
             "desc": "Mack Air 新年特价",
             "price": "5000",
@@ -19,7 +19,7 @@
             "tag": "热卖中"
         },
         {
-            "id": 1,
+            "id": 3,
             "img": "http://vuelearn.oss-cn-shenzhen.aliyuncs.com/2018-01-25_224203.png",
             "desc": "Mack Air 新年特价",
             "price": "5000",
@@ -27,7 +27,7 @@
             "available": 100,
             "tag": "热卖中"
         }, {
-            "id": 1,
+            "id": 4,
             "img": "http://vuelearn.oss-cn-shenzhen.aliyuncs.com/2018-01-25_224203.png",
             "desc": "Mack Air 新年特价",
             "price": "5000",
