@@ -2,7 +2,7 @@
 <template>
   <div id="tmpl">
       <mt-swipe :auto="4000">
-        <mt-swipe-item v-for="item in imgs" :key="item.url">
+        <mt-swipe-item v-for="item in imgs" :key="item.id">
             <img :src="item.image">
         </mt-swipe-item>
     </mt-swipe>
@@ -17,6 +17,7 @@ export default {
       }
   },
   created(){
+    console.info('组件获取值：'+this.imgs);
   }
 }
 </script>

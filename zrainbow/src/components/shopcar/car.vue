@@ -10,7 +10,7 @@
             <ul>
               <li>￥{{item.sellPrice}}</li>
               <li><CarInputNum :recount="item.count" :goodsId="item.id" v-on:initCount="initCount"></CarInputNum></li>
-              <li><a href="#">删除</a></li>
+              <li><a href="#" @click="delRow(index,item.id)">删除</a></li>
             </ul>
           </div>
         </div>
@@ -30,9 +30,10 @@
 </template>
 <!--  -->
 <script>
-import {getGoodsObject,setItem} from '../../kits/localsg.js';
-import dataListJson from '../../../statics/data/car/car.json';
+import {getGoodsObject,setItem,removeGoodsInfoById} from '../../kits/localsg.js';
 import CarInputNum from '../subcommon/CarInputNum.vue';
+import {Toast} from 'mint-ui';
+import common from '../../kits/common.js';
 export default {
   components:{
     CarInputNum
@@ -63,8 +64,6 @@ export default {
   },
   created(){
     this.getDataList();
-
-    /** switch控件控制 */
   },
   methods:{
     getDataList(){
@@ -78,13 +77,31 @@ export default {
       // 请求接口获取到相应的数据 
       idStr = idStr.substring(0,idStr.length-1);
       console.info('idStr='+idStr);
-      dataListJson.data.forEach(item=>{
-        item.count = obj[item.id];
-        this.switchArr.push(false);
+      if(idStr == ""){
+        Toast('亲，购物车现在还是空空如也！');
+        return;
+      }
+      var url = common.apidomain +'/goods/getGoodsInfo/'+idStr;
+      this.$http.get(url).then(resp=>{
+        var result = resp.body;
+        if(result.code === '0'){
+          var dataListTmp = result.data;
+          if(dataListTmp){
+            /** 从缓存中获取每件商品的件数 */
+            dataListTmp.forEach(item=>{
+              item.count = obj[item.id];
+              this.switchArr.push(false);
+            });
+            this.dataList = dataListTmp;
+          }
+        }else{
+          Toast(result.code+':'+result.msg);
+          return;
+        }
+      },err=>{
+        Toast('接口出现异常:'+err);
+        return;
       });
-      /** 获取缓存中的数量 */
-      this.dataList = dataListJson.data;
-
     },
     initCount(resObj){
       var realCount = 1;
@@ -97,6 +114,14 @@ export default {
       }
       setItem(iniObj);
       this.getDataList();
+    },
+    delRow(index,goodsId){
+      // 1.0 Switch数组中对应的索引位置的值删除掉
+      this.switchArr.splice(index,1);
+      // 2.0 dataList中的值删除掉
+      this.dataList.splice(index,1);
+      // 3.0 localstorage中对应的goodsId对应的项都删除掉
+      removeGoodsInfoById(goodsId);
     }
   }
 }

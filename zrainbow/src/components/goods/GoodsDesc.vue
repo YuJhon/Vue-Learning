@@ -8,7 +8,8 @@
 </template>
 <!--  -->
 <script>
-import goodsDescData from '../../../statics/data/goods/GoodsDesc.json';
+import common from '../../kits/common.js';
+import {Toast} from 'mint-ui';
 export default {
   data(){
       return {
@@ -22,7 +23,19 @@ export default {
   },
   methods:{
       getGoodsDesc(){
-          this.goodsDesc = goodsDescData.data;
+          var url = common.apidomain + '/goods/goodsDesc/'+this.id;
+          this.$http.get(url).then(resp=>{
+              var result = resp.body;
+              if(result.code == '0'){
+                  this.goodsDesc = result.data;
+              }else{
+                  Toast(result.code+':'+result.msg);
+                  return;
+              }
+          },err=>{
+              Toast('接口调用异常！');
+              return;
+          });
       }
   }
 }

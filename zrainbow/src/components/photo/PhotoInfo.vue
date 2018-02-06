@@ -6,7 +6,7 @@
         <!-- 1.1 图片标题 -->
         <div class="title">
           <h4 v-text="photoInfo.title"></h4>
-          <p>{{photoInfo.addTime | datefmt('YYYY-MM-DD HH:mm:ss')}} 浏览{{photoInfo.click}}次</p>
+          <p>{{photoInfo.addTime | datefmt('YYYY-MM-DD HH:mm:ss')}} 浏览{{photoInfo.scan}}次</p>
           <p class="line"></p>
         </div>
         <!-- 1.2 缩略图 https://www.npmjs.com/package/vue-preview -->
@@ -19,20 +19,19 @@
 		    </div>
         <!-- 图片摘要 -->
         <div class="layer-summary">
-          <p class="summary" v-text="photoInfo.desc">图片摘要</p>
+          <p class="summary" v-text="photoInfo.summary">图片摘要</p>
         </div>
       </div>
       <!-- 2.评论组件部分 -->
       <div id="comment">
-        <comment :id="id"></comment>
+        <comment :id="id" :category="category"></comment>
       </div>
   </div>
 </template>
 <!--  -->
 <script>
+import {PHOTO_COMMENT_CATEGORY} from '../../kits/vm.js';
 import comment from '../subcommon/Comment.vue';
-import detailRes from '../../../statics/data/photo/detail.json';
-import listRes from '../../../statics/data/photo/detailPhotoList.json';
 import {Toast} from 'mint-ui';
 import common from '../../kits/common.js';
 export default {
@@ -43,39 +42,51 @@ export default {
   data(){
     return {
       id:'',
+      category:'',
       photoInfo:{},
       list: []
     }
   },
   created(){
     this.id = this.$route.params.id;
+    this.category = PHOTO_COMMENT_CATEGORY;
     this.getDetailInfo();
     this.getPhotoList();
   },
   methods:{
     getDetailInfo(){
-      /**
-      var url = common.apidomain +'/photoInfo/'+this.id;
-      this.$route.get(url)
-      .then(resp=>{
-        var tempData = resp.body;
-        if(tempData.status != '0'){
-          Toast(tempData.msg);
+      var url = common.apidomain +'/photoInfo/detail/'+this.id;
+      this.$http.get(url).then(resp=>{
+        var result = resp.body;
+        if(result.code == '0'){
+          this.photoInfo = result.data;
+        }else{
+          Toast(result.code+':'+result.msg);
           return;
         }
-        this.photoInfo = resp.body.data;
       }).then(resp=>{
-        Toast(resp.body.msg);
+        Toast('调用接口异常！'+resp);
+        return;
       });
-      */
-      this.photoInfo = detailRes.data;
     },
     getPhotoList(){
-      listRes.data.forEach(item =>{
-        item.w = 400;
-        item.h = 300;
+      var url = common.apidomain +'/pictureThum/list/'+this.id;
+      this.$http.get(url).then(resp=>{
+        var result = resp.body;
+        if(result.code == '0'){
+          result.data.forEach(item =>{
+            item.w = 400;
+            item.h = 300;
+          });
+          this.list = result.data;
+        }else{
+          Toast(result.code+':'+result.msg);
+          return;
+        }
+      }).then(resp=>{
+        Toast('调用接口异常！'+resp);
+        return;
       });
-      this.list = listRes.data;
     }
   }
 }

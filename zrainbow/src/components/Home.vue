@@ -35,7 +35,7 @@
                         <div class="mui-media-body">商品列表</div>
                     </router-link>
                 </li>
-                <li class="mui-table-view-cell mui-media mui-col-xs-4 mui-col-sm-3">
+                <!-- <li class="mui-table-view-cell mui-media mui-col-xs-4 mui-col-sm-3">
                     <router-link to="/search">
                         <span class="mui-icon mui-icon-search"></span>
                         <div class="mui-media-body">Search</div>
@@ -64,7 +64,7 @@
                         <span class="mui-icon mui-icon-more"></span>
                         <div class="mui-media-body">more</div>
                     </router-link>
-                </li>
+                </li> -->
             </ul> 
 		</div>
   </div>
@@ -73,7 +73,7 @@
 <script>
 import { Toast } from 'mint-ui';
 /* 获取静态数据 */
-import picDatas from '../../statics/data/home/pictureInfo.json';
+//import picDatas from '../../statics/data/home/pictureInfo.json';
 /* 公共组件的导入 */
 import common from '../kits/common.js';
 /** 轮播组件的导入 */
@@ -92,27 +92,27 @@ export default {
   },
   methods:{
       getimgs(){
-          /*
           // 1.确定url
-          var url = '';
-          common.apidomain;
+          var url = common.apidomain+'/coverPic/list';
           // 2.调用$http.get()
           this.$http.get(url).then(resp=>{
-              var data = resp.body;
-              if(data.status == '0'){
-                  return data.message;
+              var tempData = resp.body;
+              console.info(tempData);
+              if(tempData.code == '0'){
+                  this.imgs = tempData.data;
               }else{
-                  Toast('系统繁忙，请稍后再试1！');
+                  Toast(tempData.code+':'+tempData.msg);
                   return;
               }
-          }).then(resp=>{
-              Toast('系统繁忙，请稍后再试！'+resp);
+          },errResp=>{
+              Toast("调用接口异常，请稍后再试！");
               return;
           });
-          */
           
+          /*
           // 接口还未实现，后期再实现
           this.imgs = picDatas.data;
+          */
       }
   }
 };

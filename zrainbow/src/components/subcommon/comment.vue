@@ -16,7 +16,7 @@
             <div class="title">
                 <span>第{{index + 1}}楼</span>
                 <span>用户:{{item.username}}</span>
-                <span>发布时间:{{item.cTime | datefmt('YYYY-MM-DD HH:mm:ss')}}</span>
+                <span>发布时间:{{item.createdTime | datefmt('YYYY-MM-DD HH:mm:ss')}}</span>
             </div>
             <ul class="mui-table-view">
                 <li class="mui-table-view-cell" v-text="item.content"></li>
@@ -35,10 +35,13 @@
     import common from '../../kits/common.js';
     /* 提示信息 */
     import {Toast} from 'mint-ui';
-    /* 模拟的静态数据 */
+    /** 产量的导入 */
+    import {NEWS_COMMENT_CATEGORY,GOODS_COMMENT_CATEGORY} from '../../kits/vm.js';
+    /* 模拟的静态数据 
     import postRes from '../../../statics/data/comment/post.json';
     import listRes from '../../../statics/data/comment/list.json';
     import moreRes from '../../../statics/data/comment/more.json';
+    */
     export default {
         data(){
             return {
@@ -50,7 +53,7 @@
                 commentList:[]
             }
         },
-        props:['id'],
+        props:['id','category'],
         created(){
             this.getCommentList();
         },
@@ -60,45 +63,56 @@
                     Toast('评论内容不能为空！');
                     return;
                 }
-                var url = common.apidomain + '/api/postComment/'+this.id;
+                var url = common.apidomain + '/comment/postComment/'+this.id;
                 console.info('请求地址：'+url);
+                console.info('评论的内容：'+this.category);
                 console.info('评论内容：'+this.comment);
-                /*
                 this.$http.post(url, {
-                    comment: this.comment
+                    content: this.comment,
+                    category: this.category
                 }, {
                     emulateJSON: false
                 }).then(resp => {
-                    console.info(resp.body);
-                    this.comment = '';
-                    if (resp.body.status == 0) {
-                        Toast(resp.body.data);
+                    var result = resp.body;
+                    console.info(result);
+                    if (result.code == '0') {
+                        Toast(result.msg);
+                        /** 提示评论提交成 */
+                        this.commentList = [{
+                            "username": "匿名用户",
+                            "cTime": new Date(),
+                            "content": this.comment
+                        }].concat(this.commentList);
+                        this.comment = '';
                     } else {
-                        console.info('出错了');
+                        Toast(result.code+":"+result.msg);
                     }
                 }, resp => {
-                    console.error('系统繁忙，请稍后再试！');
+                    Toast('系统繁忙，请稍后再试！');
                 });
-                */
-                /** 提示评论提交成 */
-                Toast(postRes.data);
-                this.commentList = [{
-                    "username": "匿名用户",
-                    "cTime": new Date(),
-                    "content": this.comment
-                }].concat(this.commentList);
-                /**清空评论内容 */
-                this.comment = '';
             },
             getCommentList(pageIndex){
                 pageIndex = pageIndex || 1;
-                // 接口待定 GET方法获取评论列表
-                this.commentList = this.commentList.concat(listRes.data);
+                var url = common.apidomain + '/comment/list/'+this.category+'/'+this.id+'/'+pageIndex;
+                this.$http.get(url).then(resp=>{
+                    var tempData = resp.body;
+                    if(tempData.code === "0"){
+                        if(tempData.data && tempData.data.length>0){
+                            this.commentList = this.commentList.concat(tempData.data);
+                        }else{
+                            Toast('亲，已经没有更多的数据...');
+                            return;
+                        }
+                    }else{
+                        Toast(tempData.code+':'+tempData.msg);
+                    }
+                },err=>{
+                    Toast('接口出现异常，'+err);
+                });
             },
             moreComments(){
                 this.pageIndex++ ;
-                //getCommentList(this.pageIndex);
-                this.commentList = this.commentList.concat(moreRes.data);
+                this.getCommentList(this.pageIndex);
             }
         }
     }
@@ -125,5 +139,6 @@
 }
 .more-btn{
     padding-bottom:5px;
+    height:100px;
 }
 </style>

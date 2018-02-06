@@ -3,7 +3,9 @@
   <div>
       <!-- Section one Header Define :Use Mint-UI中的Header组件-->
       <mt-header fixed title="RainBow"></mt-header>
-
+	  <div v-if="isShow" id="back">
+		  <a href="javascript:void(0);" @click="backto">返回</a>
+	  </div>
       <!-- Section Two Router-view -->
       <router-view></router-view>
 
@@ -41,13 +43,44 @@ vm.$on(COUNT_STR,function(count){
 	badgeEle.innerHTML = parseInt(badgeEle.innerHTML)+count;
 });
 export default {
-
+	data(){
+		return{
+			isShow:false
+		}
+	},
+	watch:{
+		'$route':function(newRoute,oldRoute){
+			if(newRoute.path.toLowerCase() == '/home'){
+				this.isShow = false;
+			}else{
+				this.isShow = true;
+			}
+		}
+	},
+	methods:{
+		backto(){
+			this.$router.go(-1); 
+		}
+	}
 }
 </script>
 
 <!-- 组件样式定义 -->
 <style scoped>
+#back{
+	width: 60px;
+	position: absolute;
+	top:15px;
+	left:10px;
+	z-index:1000;
+}
 
+#back a{
+	color:#fff;
+	font-size: 16px;
+	font-weight: bold;
+	
+}
 </style>
 
 

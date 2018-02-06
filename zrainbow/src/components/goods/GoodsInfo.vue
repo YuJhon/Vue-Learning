@@ -7,7 +7,7 @@
       </div>
       <!-- 购买区域 -->
       <div id="buy">
-          <h3 v-text="goodsInfo.title"></h3>
+          <h3 v-text="goodsInfo.name"></h3>
           <p class="line"></p>
           <ul>
               <li>
@@ -32,7 +32,7 @@
           <h5>商品参数</h5>
           <p class="line"></p>
           <ul>
-              <li>商品货号：{{goodsInfo.goodsNo}}</li>
+              <li>商品货号：{{goodsInfo.serialNum}}</li>
               <li>库存情况：{{goodsInfo.stockQuantity}}</li>
               <li>上架时间：{{goodsInfo.addTime | datefmt('YYYY-MM-DD')}}</li>
           </ul>
@@ -50,12 +50,11 @@
 </template>
 <!--  -->
 <script>
-import goodsDetail from '../../../statics/data/goods/goodsDetail.json';
-import picDatas from '../../../statics/data/home/pictureInfo.json';
 import slide from '../subcommon/Slide.vue';
 import inputNum from '../subcommon/InputNum.vue';
 import {vm,COUNT_STR} from '../../kits/vm.js';
 import {setItem,itemObj} from '../../kits/localsg.js';
+import common from '../../kits/common.js';
 export default {
   data(){
       return {
@@ -76,10 +75,40 @@ export default {
   },
   methods:{
       getImages(){
-          this.list = picDatas.data;
+          // 1.确定url
+          var url = common.apidomain+'/coverPic/list';
+          // 2.调用$http.get()
+          this.$http.get(url).then(resp=>{
+              var tempData = resp.body;
+              console.info(tempData);
+              if(tempData.code == '0'){
+                  this.list = tempData.data;
+              }else{
+                  Toast(tempData.code+':'+tempData.msg);
+                  return;
+              }
+          },errResp=>{
+              Toast("调用接口异常，请稍后再试！");
+              return;
+          });
       },
       getGoodsInfo(){
-          this.goodsInfo = goodsDetail.data;
+          // 1.确定url
+          var url = common.apidomain+'/goods/goodsInfo/'+this.id;
+          // 2.调用$http.get()
+          this.$http.get(url).then(resp=>{
+              var tempData = resp.body;
+              console.info(tempData);
+              if(tempData.code == '0'){
+                  this.goodsInfo = tempData.data;
+              }else{
+                  Toast(tempData.code+':'+tempData.msg);
+                  return;
+              }
+          },errResp=>{
+              Toast("调用接口异常，请稍后再试！");
+              return;
+          });
       },
       getCount(count){
           //console.info('获取到子组件传递的值：'+count);

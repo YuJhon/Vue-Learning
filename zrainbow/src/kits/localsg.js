@@ -45,3 +45,16 @@ export function getGoodsObject() {
     }
     return resObj;
 }
+
+/**
+ * 6.0 根据goodsId移除对应的缓存
+ */
+export function removeGoodsInfoById(goodsId) {
+    var arr = getItem();
+    for (var i = arr.length - 1; i >= 0; i--) {
+        if (arr[i].goodsId == goodsId) {
+            arr.splice(i, 1);
+        }
+    }
+    localStorage.setItem(KEY, JSON.stringify(arr));
+}
