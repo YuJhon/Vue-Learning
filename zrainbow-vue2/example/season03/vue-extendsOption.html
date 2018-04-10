@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <script type="text/javascript" src="../../assets/js/vue.js"></script>
+    <title>Extends Option 扩展选项</title>
+</head>
+
+<body>
+    <h1>Extends Option Demo</h1>
+    <hr>
+    <div id="app">
+        {{message}}
+        <p><button @click="add">add</button></p>
+    </div>
+
+    <script type="text/javascript">
+        var bbb = {
+            created: function() {
+                console.log("我是被扩展出来的");
+            },
+            methods: {
+                add: function() {
+                    console.log('我是被扩展出来的方法！');
+                }
+            }
+        };
+        var app = new Vue({
+            el: '#app',
+            data: {
+                message: 'hello Vue!'
+            },
+            methods: {
+                add: function() {
+                    console.log('我是原生方法');
+                }
+            },
+            extends: bbb,
+            //delimiters:['${','}']  (delimiters的作用是改变我们插值的符号)插值形式就变成了${}
+        })
+    </script>
+</body>
+
+</html>

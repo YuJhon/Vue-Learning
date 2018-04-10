@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <script type="text/javascript" src="../../assets/js/vue.js"></script>
+    <title>vue-component-three</title>
+</head>
+
+<body>
+    <h3>vue.Component</h3>
+    <hr>
+    <div id="app">
+        <jhon :from-here="message"></jhon>
+    </div>
+    <script>
+        var rain = {
+            template: `<h2>Rain Of Jhon!</h2>`
+        }
+        var jhon = {
+            template: `<div><h2 style="color:Red;">Jhon Rain From {{fromHere}}</h2><rain></rain></div>`,
+            props: ['fromHere'],
+            components: {
+                "rain": rain
+            }
+        }
+        var app = new Vue({
+            el: "#app",
+            data: {
+                message: "SZ"
+            },
+            components: {
+                "jhon": jhon
+            }
+        });
+    </script>
+</body>
+
+</html>

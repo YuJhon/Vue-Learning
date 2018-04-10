@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <script type="text/javascript" src="../../assets/js/vue.js"></script>
+    <title>v-directive</title>
+</head>
+
+<body>
+    <div id="app">
+        <div v-jhon="color">{{num}}</div>
+        <div v-rain="color">rain</div>
+        <p><button @click="add">Add</button></p>
+    </div>
+    <script>
+        /** 
+                                                    el: 指令所绑定的元素，可以用来直接操作DOM。
+
+                                                    binding:  一个对象，包含指令的很多信息。
+
+                                                    vnode: Vue编译生成的虚拟节点。
+                                                */
+        Vue.directive('jhon', function(el, binding, vnode) {
+            el.style = 'color:' + binding.value;
+        });
+        Vue.directive('rain', {
+            bind: function(el, binding) { //被绑定
+                console.log('1 - bind');
+                el.style = 'color:' + binding.value;
+            },
+            inserted: function() { //绑定到节点
+                console.log('2 - inserted');
+            },
+            update: function() { //组件更新
+                console.log('3 - update');
+            },
+            componentUpdated: function() { //组件更新完成
+                console.log('4 - componentUpdated');
+            },
+            unbind: function() { //解绑
+                console.log('1 - bind');
+            }
+        });
+        var app = new Vue({
+            el: "#app",
+            data: {
+                num: 1,
+                color: 'green'
+            },
+            methods: {
+                add() {
+                    this.num++;
+                }
+            }
+        });
+    </script>
+</body>
+
+</html>

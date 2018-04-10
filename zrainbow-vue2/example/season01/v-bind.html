@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <script type="text/javascript" src="../../assets/js/vue.js"></script>
+    <title>v-bind</title>
+    <style>
+        .classA {
+            color: red;
+        }
+        
+        .classB {
+            font-size: 24px;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="app">
+        <h3>图片资源</h3>
+        <img v-bind:src="imgSrc" alt="图片的绑定" width="400px">
+        <hr>
+        <h3>超链接</h3>
+        <a v-bind:href="website" target="_blank">点击我</a> |
+        <!-- 简写方式 -->
+        <a :href="website" target="_blank">点击我</a>
+        <hr>
+        <h3>样式绑定</h3>
+        <div :class="className">1、绑定classA</div>
+        <br>
+        <div :class="{classA:isOk}">2、绑定class中的判断</div>
+        <br>
+        <div :class="[classA,classB]">3、绑定class中的数组</div>
+        <br>
+        <div :class="isOk?classA:classB">4、绑定class中的三元表达式判断</div>
+        <br>
+        <div :style="{color:red,fontSize:font}">5、绑定style</div>
+        <br>
+        <div :style="styleObject">6、用对象绑定style样式</div>
+    </div>
+    <script>
+        var app = new Vue({
+            el: "#app",
+            data: {
+                imgSrc: "http://odrarykf5.bkt.clouddn.com/yasuko.jpg",
+                website: "http://www.jhonrain.org",
+                className: "classA",
+                classA: "classA",
+                classB: "classB",
+                isOk: false,
+                styleObject: {
+                    fontSize: '24px',
+                    color: 'green'
+                }
+            }
+        });
+    </script>
+</body>
+
+</html>

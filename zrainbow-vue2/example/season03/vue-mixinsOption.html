@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <script type="text/javascript" src="../../assets/js/vue.js"></script>
+    <title>Mixins 混入选项操作</title>
+</head>
+
+<body>
+    <!-- Mixins 混入选项操作 -->
+    <h1>Mixins Option Demo</h1>
+    <hr>
+    <div id="app">
+        <p>num:{{ num }}</p>
+        <P><button @click="add">增加数量</button></P>
+    </div>
+    <script>
+        //额外临时加入时，用于显示日志
+        var addLog = {
+            updated: function() {
+                console.log("数据放生变化,变化成" + this.num + ".");
+            }
+        }
+        var app = new Vue({
+            el: '#app',
+            data: {
+                num: 1
+            },
+            methods: {
+                add: function() {
+                    this.num++;
+                }
+            },
+            updated: function() {
+                console.log("构造器里的updated方法。")
+            },
+            /* 从执行的先后顺序来说，都是混入的先执行，然后构造器里的再执行，需要注意的是，这并不是方法的覆盖 
+            当混入方法和构造器的方法重名时，混入的方法无法展现，也就是不起作用*/
+            mixins: [addLog] //混入
+        })
+    </script>
+</body>
+
+</html>

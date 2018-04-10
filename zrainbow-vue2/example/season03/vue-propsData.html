@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <script type="text/javascript" src="../../assets/js/vue.js"></script>
+    <title>propsData</title>
+</head>
+
+<body>
+    <h1>PropsData Option Demo</h1>
+    <hr>
+    <rain></rain>
+    <script>
+        var rain_a = Vue.extend({
+            template: `<p>{{message}}-{{a}}</p>`,
+            data: function() {
+                return {
+                    message: 'Hello,I am Rain'
+                }
+            },
+            props: ['a']
+        });
+        new rain_a({
+            propsData: {
+                a: 1
+            }
+        }).$mount('rain');
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <script type="text/javascript" src="../../assets/js/vue.js"></script>
+    <title>vue.set</title>
+</head>
+
+<body>
+    <div id="app">
+        <ul>
+            <li v-for=" aa in arr">{{aa}}</li>
+        </ul>
+    </div>
+    <p><button onclick="add()">Add</button></p>
+
+    <script>
+        function add() {
+            console.log("我已经执行了");
+            app.arr[1] = 'ddd';
+            Vue.set(app.arr, 1, 'ddd');
+        }
+        var outData = {
+            arr: ['aaa', 'bbb', 'ccc']
+        };
+
+        var app = new Vue({
+            el: '#app',
+            //引用外部数据
+            data: outData
+        });
+    </script>
+</body>
+
+</html>

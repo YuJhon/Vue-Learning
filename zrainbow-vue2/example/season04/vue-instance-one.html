@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <script type="text/javascript" src="../../assets/js/vue.js"></script>
+    <script type="text/javascript" src="../../assets/js/jquery-3.3.1.min.js"></script>
+    <title>Vue 实例入门-实例属性</title>
+</head>
+
+<body>
+    <h1>引入jquery</h1>
+    <hr>
+    <div id="app">
+        {{message}}
+    </div>
+    <script>
+        var app = new Vue({
+            el: "#app",
+            data: {
+                message: "Hello Vue"
+            },
+            mounted: function() {
+                $('#app').html('Hello JQuery');
+            },
+            methods: {
+                add: function() {
+                    console.log("调用了Add方法");
+                }
+            }
+        });
+        app.add();
+    </script>
+</body>
+
+</html>

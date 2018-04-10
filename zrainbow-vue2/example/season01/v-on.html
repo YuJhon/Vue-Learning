@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <script type="text/javascript" src="../../assets/js/vue.js"></script>
+    <title>v-on</title>
+</head>
+
+<body>
+    <div id="app">
+        当前数值为： {{count}}<br/>
+        <button v-on:click="add">+1分</button>
+        <button @click="substract">-1分</button>
+    </div>
+
+    <script>
+        var app = new Vue({
+            el: "#app",
+            data: {
+                count: 1
+            },
+            methods: {
+                add: function() {
+                    this.count++;
+                },
+                substract() {
+                    this.count--;
+                }
+            }
+        });
+    </script>
+</body>
+
+</html>

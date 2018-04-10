@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <script type="text/javascript" src="../../assets/js/vue.js"></script>
+    <title>vue-component-two</title>
+</head>
+
+<body>
+    <h3>vue.Component</h3>
+    <hr>
+    <div id="app">
+        <!-- <rain here="china"></rain> -->
+        <jhon :from-here="message"></jhon>
+    </div>
+    <script>
+        var app = new Vue({
+            el: "#app",
+            data: {
+                message: "SZ"
+            },
+            components: {
+                /* "rain": {
+                    template: `<h2 style="color:green;">Rain From {{here}}</h2>`,
+                    props: ['here']
+                }, */
+                "jhon": {
+                    template: `<h2 style="color:Red;">Jhon Rain From {{fromHere}}</h2>`,
+                    props: ['fromHere']
+                }
+            }
+        });
+    </script>
+</body>
+
+</html>

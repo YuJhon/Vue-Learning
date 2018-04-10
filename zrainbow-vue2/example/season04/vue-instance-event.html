@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <script type="text/javascript" src="../../assets/js/vue.js"></script>
+    <title>vue-instance-event</title>
+</head>
+
+<body>
+    <h3>vue 实例事件</h3>
+    <hr>
+    <div id="app">
+        {{num}}
+        <p><button onclick="reduce()">减少</button></p>
+    </div>
+    <script>
+        var app = new Vue({
+            el: "#app",
+            data: {
+                num: 10
+            }
+        });
+        app.$on('reduce', function() {
+            console.log('执行了reduce()');
+            this.num--;
+        });
+
+        app.$once('reduceOnce', function() {
+            console.log('只执行一次的方法');
+            this.num--;
+
+        });
+        //关闭事件
+        function off() {
+            app.$off('reduce');
+        }
+
+        function reduce() {
+            app.$emit('reduce');
+        }
+
+        function reduceOnce() {
+
+        }
+    </script>
+</body>
+
+</html>

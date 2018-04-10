@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <script type="text/javascript" src="../../assets/js/vue.js"></script>
+    <title>Methods Option选项</title>
+</head>
+
+<body>
+    <h3>Method Option </h3>
+    <hr>
+    <div id="app">
+        {{num}}
+        <button @click="add(2,$event)">添加</button>
+        <p>
+            <btn @click.native="add(3)"></btn>
+        </p>
+    </div>
+    <script>
+        var btn = {
+            template: `<button>btn组件</button>`
+        }
+        var app = new Vue({
+            el: "#app",
+            data: {
+                num: 1
+            },
+            methods: {
+                add(count, event) {
+                    console.log(event);
+                    this.num += count;
+                }
+            },
+            components: {
+                "btn": btn
+            }
+        });
+    </script>
+</body>
+
+</html>
