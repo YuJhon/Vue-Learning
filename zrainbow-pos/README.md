@@ -2,6 +2,8 @@
 
 > A Vue.js project
 
+![效果图](./photos/效果图.png)
+
 ## Build Setup
 
 ``` bash
