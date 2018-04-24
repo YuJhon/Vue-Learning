@@ -2,24 +2,52 @@
     <div class="left-nav">
         <ul>
             <li>
-                <i class="icon iconfont icon-shouyintai"></i>
-                <div>收银</div>
+                <div>
+                    <i class="icon iconfont icon-shouyintai"></i>
+                    <div>
+                        <router-link to="/">首页</router-link>
+                    </div>
+                </div>
             </li>
             <li>
-                <i class="icon iconfont icon-dianpu"></i>
-                <div>店铺</div>
+                <div>
+                    <i class="icon iconfont icon-shouyintai"></i>
+                    <div>
+                        <router-link to="/pos">收银</router-link>
+                    </div>
+                </div>
             </li>
             <li>
-                <i class="icon iconfont icon-shangpin-"></i>
-                <div>商品</div>
+                <div>
+                    <i class="icon iconfont icon-dianpu"></i>
+                    <div>
+                        <router-link to="/shop">店铺</router-link>
+                    </div>
+                </div>
             </li>
             <li>
-                <i class="icon iconfont icon-huiyuan"></i>
-                <div>会员</div>
+                <div>
+                    <i class="icon iconfont icon-shangpin-"></i>
+                    <div>
+                        <router-link to="/goods">商品</router-link>
+                    </div>
+                </div>
             </li>
             <li>
-                <i class="icon iconfont icon-tongji"></i>
-                <div>统计</div>
+                <div>
+                    <i class="icon iconfont icon-huiyuan"></i>
+                    <div>
+                        <router-link to="/member">会员</router-link>
+                    </div>
+                </div>
+            </li>
+            <li>
+                <div>
+                    <i class="icon iconfont icon-tongji"></i>
+                    <div>
+                        <router-link to="/statistics">统计</router-link>
+                    </div>
+                </div>
             </li>
         </ul>
     </div>
@@ -27,12 +55,10 @@
 
 <script>
 export default {
-    name:'leftNav',
-    data(){
-        return {
-
-        }
-    }
+  name: "leftNav",
+  data() {
+    return {};
+  }
 };
 </script>
 
@@ -58,6 +84,11 @@ export default {
   text-align: center;
   border-bottom: 1px solid #20a0ff;
   padding: 10px;
+}
+
+.left-nav a {
+  text-decoration: none;
+  color: #fff;
 }
 </style>
 
