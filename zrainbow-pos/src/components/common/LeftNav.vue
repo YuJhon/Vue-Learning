@@ -2,23 +2,23 @@
     <div class="left-nav">
         <ul>
             <li>
-                <i class="icon icon-font icon-shouyintai"></i>
+                <i class="icon iconfont icon-shouyintai"></i>
                 <div>收银</div>
             </li>
             <li>
-                <i class="icon icon-font icon-dianpu"></i>
+                <i class="icon iconfont icon-dianpu"></i>
                 <div>店铺</div>
             </li>
             <li>
-                <i class="icon icon-font icon-shangpin-"></i>
+                <i class="icon iconfont icon-shangpin-"></i>
                 <div>商品</div>
             </li>
             <li>
-                <i class="icon icon-font icon-huiyuan"></i>
+                <i class="icon iconfont icon-huiyuan"></i>
                 <div>会员</div>
             </li>
             <li>
-                <i class="icon icon-font icon-tongji"></i>
+                <i class="icon iconfont icon-tongji"></i>
                 <div>统计</div>
             </li>
         </ul>
@@ -45,7 +45,7 @@ export default {
   float: left;
   width: 5%;
 }
-.icon-font {
+.iconfont {
   font-size: 24px;
 }
 
